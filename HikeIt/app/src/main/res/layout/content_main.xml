@@ -24,8 +24,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="111dp"
-        android:id="@+id/near_me_button"
+        android:id="@+id/button"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:elevation="0dp" />
+
+    <Button
+        android:text="@string/button_search"
+        android:onClick="goToSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/near_me_button"
+        android:elevation="0dp"
+        android:layout_marginTop="71dp"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

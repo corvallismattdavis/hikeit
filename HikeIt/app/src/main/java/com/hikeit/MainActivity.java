@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,4 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //Begin Button Edit Methods
+    public void goToSearch (View view) {
+        Intent startNewSearchActivity = new Intent(this, DisplaySearchActivity.class);
+        startActivity(startNewSearchActivity);
+
+    }
+
+
+
+
+
 }
