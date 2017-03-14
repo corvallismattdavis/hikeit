@@ -7,6 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context="com.hikeit.DisplaySearchActivity">
 
+    <include layout="@layout/content_display_search" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,21 +16,154 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/white">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/bishops"
+                        android:id="@+id/hike_img"
+                        android:layout_gravity="top|center_vertical"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/hike_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="6dp"
+                        style="?android:textAppearanceSmallInverse"
+                        android:background="@android:color/darker_gray"
+                        tools:text="@string/hike_title"
+                        android:alpha="100"
+                        android:textStyle="normal|bold"
+                        android:typeface="normal"
+                        android:textSize="18sp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar2"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar3"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar4"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar5"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar6"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar7"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar9"
+                    android:padding="10dp"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="rtl"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layout_gravity="right" />
+
+            </LinearLayout>
+        </ScrollView>
+
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_display_search" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>
