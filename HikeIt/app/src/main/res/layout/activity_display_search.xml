@@ -70,12 +70,12 @@
                     android:id="@+id/ratingBar"
                     android:numStars="5"
                     android:rating="4.7"
-                    android:layoutDirection="rtl"
+                    android:layoutDirection="ltr"
                     android:stepSize="0.1"
                     android:foregroundGravity="top|right"
                     style="@android:style/Widget.DeviceDefault.Light.RatingBar"
-                    android:layout_gravity="right"
-                    android:padding="0dp" />
+                    android:padding="0dp"
+                    android:layout_gravity="left" />
 
                 <TextView
                     android:id="@+id/hike_description"
