@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.hikeit.HikeActivity">
+
+    <include layout="@layout/content_hike" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/white">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/bishops"
+                        android:id="@+id/hike_img"
+                        android:layout_gravity="top|center_vertical"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/hike_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="6dp"
+                        style="?android:textAppearanceSmallInverse"
+                        android:background="@android:color/darker_gray"
+                        android:text="@string/hike_title"
+                        android:alpha="100"
+                        android:textStyle="normal|bold"
+                        android:typeface="normal"
+                        android:textSize="18sp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar"
+                    android:numStars="5"
+                    android:rating="4.7"
+                    android:layoutDirection="ltr"
+                    android:stepSize="0.1"
+                    android:foregroundGravity="top|right"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:padding="0dp"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/hike_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp"
+                    style="?android:textAppearanceSmallInverse"
+                    android:text="@string/hike_description"
+                    android:alpha="100"
+                    android:textStyle="normal|bold"
+                    android:typeface="normal"
+                    android:textSize="18sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/other_hikes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp"
+                    style="?android:textAppearanceSmallInverse"
+                    android:text="@string/other_hikes"
+                    android:alpha="100"
+                    android:textStyle="normal|bold"
+                    android:typeface="normal"
+                    android:textSize="14sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/img"
+                        android:src="@drawable/bishops"
+                        android:layout_marginLeft="140dp" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/img"
+                        android:src="@drawable/bishops"
+                        android:layout_marginLeft="265dp"
+                        android:foregroundGravity="right"
+                        android:layout_marginRight="0dp" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/img"
+                        android:src="@drawable/bishops"
+                        android:layout_marginLeft="15dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>
