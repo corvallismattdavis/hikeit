@@ -8,43 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:334196322464:android:c386dfe74f8ec84f",
-        "android_client_info": {
-          "package_name": "com.hikeit.android"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "334196322464-b9p9flq1skdl9tdrp434dr8qj8p1rrsb.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCVPu1TDlYzOPspAUv6gS8kpP6kj2CNfP4"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:334196322464:android:b1ad1346fc8b9fe4",
         "android_client_info": {
           "package_name": "com.hikeit"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "334196322464-mtnddlo58atunsbpqrv5lq41faae3q0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hikeit",
+            "certificate_hash": "e1432309734c7df0cf459586c9a3e688aeb35490"
+          }
+        },
         {
           "client_id": "334196322464-734g0bpfdg8s6odpg09fe31jeja9rv9d.apps.googleusercontent.com",
           "client_type": 1,
