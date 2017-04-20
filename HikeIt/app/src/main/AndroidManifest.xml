@@ -19,9 +19,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".HikeActivity"
+            android:label="@string/title_activity_hike"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
             android:name=".DisplaySearchActivity"
             android:label="@string/title_activity_display_search"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

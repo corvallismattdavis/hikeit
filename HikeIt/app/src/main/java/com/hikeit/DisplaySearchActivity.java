@@ -32,14 +32,14 @@ public class DisplaySearchActivity extends AppCompatActivity {
         curContext = this;
         final ListView hikeList = (ListView) findViewById(R.id.hike_list);
 
-        arrayList.add(new HikeListItem("bishops", "Bishop Peak", HikeListItem.Difficulty.Easy, 4.5f));
-        arrayList.add(new HikeListItem("bishops", "Madonna", HikeListItem.Difficulty.Moderate, 4.8f));
-        arrayList.add(new HikeListItem("bishops", "Avila Ridge", HikeListItem.Difficulty.Hard, 4.2f));
-        arrayList.add(new HikeListItem("bishops", "Cabrillo", HikeListItem.Difficulty.Extreme, 3.7f));
-        arrayList.add(new HikeListItem("bishops", "Cal Poly \"P\"", HikeListItem.Difficulty.Easy, 4.5f));
-        arrayList.add(new HikeListItem("bishops", "East Cuesta Ridge", HikeListItem.Difficulty.Moderate, 4.8f));
-        arrayList.add(new HikeListItem("bishops", "West Cuesta Ridge", HikeListItem.Difficulty.Hard, 4.2f));
-        arrayList.add(new HikeListItem("bishops", "Valencia Peak", HikeListItem.Difficulty.Extreme, 3.7f));
+        arrayList.add(new HikeListItem("bishops", "Bishop Peak", HikeListItem.Difficulty.Easy, 4.5f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "Madonna", HikeListItem.Difficulty.Moderate, 4.8f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "Avila Ridge", HikeListItem.Difficulty.Hard, 4.2f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "Cabrillo", HikeListItem.Difficulty.Vigorous, 3.7f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "Cal Poly \"P\"", HikeListItem.Difficulty.Easy, 4.5f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "East Cuesta Ridge", HikeListItem.Difficulty.Moderate, 4.8f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "West Cuesta Ridge", HikeListItem.Difficulty.Hard, 4.2f, 3.3f));
+        arrayList.add(new HikeListItem("bishops", "Valencia Peak", HikeListItem.Difficulty.Vigorous, 3.7f, 3.3f));
 
         SearchView searchView = (SearchView) findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -21,6 +21,17 @@
             android:transitionName="image" />
 
         <TextView
+            android:id="@+id/list_row_difficulty"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/list_row_img"
+            android:gravity="center"
+            android:padding="@dimen/tiny_margin"
+            style="?android:textAppearanceSmallInverse"
+            android:background="@color/text_background"
+            tools:text="Overlay"/>
+
+        <TextView
             android:id="@+id/list_row_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +45,7 @@
             tools:text="Title 1" />
 
         <TextView
-            android:id="@+id/list_row_difficulty"
+            android:id="@+id/list_row_length"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/list_row_img"
@@ -56,7 +67,8 @@
             android:padding="0dp"
             style="@android:style/Widget.DeviceDefault.Light.RatingBar"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/list_row_img" />
+            android:layout_toEndOf="@+id/list_row_img"
+            android:clickable="false" />
 
     </RelativeLayout>
 

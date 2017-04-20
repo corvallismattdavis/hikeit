@@ -51,12 +51,19 @@ class HikeListAdapter extends BaseAdapter {
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.list_row, null);
+
         TextView title = (TextView) vi.findViewById(R.id.list_row_title);
         title.setText(data[position].title);
+
         TextView difficulty = (TextView) vi.findViewById(R.id.list_row_difficulty);
         difficulty.setText(data[position].difficulty.toString());
+
+        TextView distance = (TextView) vi.findViewById(R.id.list_row_length);
+        distance.setText((data[position].distance + " miles"));
+
         ImageView icon = (ImageView) vi.findViewById(R.id.list_row_img);
         icon.setImageResource(R.drawable.bishops);
+
         RatingBar rating = (RatingBar) vi.findViewById(R.id.list_row_rating);
         rating.setRating(data[position].rating);
         return vi;
