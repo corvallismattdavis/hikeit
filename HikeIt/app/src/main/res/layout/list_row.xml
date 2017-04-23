@@ -22,6 +22,15 @@
             android:scaleType="centerCrop"
             android:transitionName="image" />
 
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:indeterminate="true"
+            android:layout_toStartOf="@+id/list_row_title" />
+
         <TextView
             android:id="@+id/list_row_difficulty"
             android:layout_width="120dp"

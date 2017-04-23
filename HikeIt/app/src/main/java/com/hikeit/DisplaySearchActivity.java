@@ -3,15 +3,10 @@ package com.hikeit;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -21,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,9 +34,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Log.d("ON CREATE", "created activity");
+
         curContext = this;
     }
 
@@ -50,9 +42,13 @@ public class DisplaySearchActivity extends AppCompatActivity {
     public void onStart()
     {
         super.onStart();
-        allHikes = new ArrayList<HikeListItem>();
 
+        final SearchView searchView = (SearchView) findViewById(R.id.search);
+        allHikes = new ArrayList<HikeListItem>();
         final ListView hikeList = (ListView) findViewById(R.id.hike_list);
+
+        searchView.setIconified(false);
+        searchView.clearFocus();
 
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,14 +64,14 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance));
                 }
 
-                initAdapter();
+//                initAdapter();
             }
-
-            public void initAdapter()
-            {
-                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
-                hikeList.setAdapter(adapter);
-            }
+//
+//            public void initAdapter()
+//            {
+//                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
+//                hikeList.setAdapter(adapter);
+//            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -83,20 +79,11 @@ public class DisplaySearchActivity extends AppCompatActivity {
             }
         });
 
-//        allHikes.add(new HikeListItem("bishops", "Bishop Peak", HikeListItem.Difficulty.Easy, 4.5f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "Madonna", HikeListItem.Difficulty.Moderate, 4.8f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "Avila Ridge", HikeListItem.Difficulty.Hard, 4.2f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "Cabrillo", HikeListItem.Difficulty.Vigorous, 3.7f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "Cal Poly \"P\"", HikeListItem.Difficulty.Easy, 4.5f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "East Cuesta Ridge", HikeListItem.Difficulty.Moderate, 4.8f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "West Cuesta Ridge", HikeListItem.Difficulty.Hard, 4.2f, 3.3f));
-//        allHikes.add(new HikeListItem("bishops", "Valencia Peak", HikeListItem.Difficulty.Vigorous, 3.7f, 3.3f));
-
-        SearchView searchView = (SearchView) findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 callSearch(query);
+                searchView.clearFocus();
                 return true;
             }
 

@@ -94,23 +94,25 @@ class HikeListAdapter extends BaseAdapter {
 
         final ImageView icon = (ImageView) vi.findViewById(R.id.list_row_img);
 
-        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl("gs://hikeit-c31a4.appspot.com/images/" + data[position].imgSrc + ".jpg");
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.d("FILE DOWNLOAD", "Successfully loaded uri");
-                icon.setImageURI(uri);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("FILE DOWNLOAD", "Failed loading uri: " + e.getMessage());
-                icon.setImageResource(R.drawable.empty_photo);
-            }
-        });
+//        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl("gs://hikeit-c31a4.appspot.com/");
+//        ref.child("images/" + data[position].imgSrc + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Log.d("FILE DOWNLOAD", "Successfully loaded uri");
+//                icon.setImageURI(uri);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("FILE DOWNLOAD", "Failed loading uri: " + e.getMessage());
+//                icon.setImageResource(R.drawable.empty_photo);
+//            }
+//        });
+
+//        vi.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
 
         RatingBar rating = (RatingBar) vi.findViewById(R.id.list_row_rating);
-        rating.setRating(data[position].rating + 10.0f);
+        rating.setRating(data[position].rating);
         return vi;
     }
 }
