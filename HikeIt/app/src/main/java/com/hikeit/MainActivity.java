@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goToMaps (View view) {
+        Intent startNewMapsActivity = new Intent(this, MapsActivity.class);
+        startActivity(startNewMapsActivity);
+    }
+
 
 
 

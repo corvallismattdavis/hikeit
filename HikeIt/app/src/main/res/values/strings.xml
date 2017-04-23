@@ -6,4 +6,5 @@
     <string name="hike_title">Bishop Peak</string>
     <string name="hike_description">This is a short description of the hike and its location. </string>
     <string name="other_hikes">Similar hikes:</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

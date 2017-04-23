@@ -17,87 +17,88 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:orientation="vertical">
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@android:color/white">
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/hike_img"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/bishops"
-                        android:id="@+id/hike_img"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_gravity="top|center_vertical"
                         android:scaleType="fitXY"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        app:srcCompat="@drawable/bishops" />
 
                     <TextView
                         android:id="@+id/hike_title"
+                        style="?android:textAppearanceSmallInverse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
-                        style="?android:textAppearanceSmallInverse"
-                        android:background="@android:color/darker_gray"
-                        android:text="@string/hike_title"
-                        android:alpha="100"
-                        android:textStyle="normal|bold"
-                        android:typeface="normal"
-                        android:textSize="18sp"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        android:alpha="100"
+                        android:background="@android:color/darker_gray"
+                        android:padding="6dp"
+                        android:text="@string/hike_title"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold"
+                        android:typeface="normal" />
 
                 </RelativeLayout>
 
                 <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ratingBar"
-                    android:numStars="5"
-                    android:rating="4.7"
-                    android:layoutDirection="ltr"
-                    android:stepSize="0.1"
+                    android:layout_gravity="left"
                     android:foregroundGravity="top|right"
-                    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+                    android:layoutDirection="ltr"
+                    android:numStars="5"
                     android:padding="0dp"
-                    android:layout_gravity="left" />
+                    android:rating="4.7"
+                    android:stepSize="0.1" />
 
                 <TextView
                     android:id="@+id/hike_description"
+                    style="?android:textAppearanceSmallInverse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="6dp"
-                    style="?android:textAppearanceSmallInverse"
-                    android:text="@string/hike_description"
-                    android:alpha="100"
-                    android:textStyle="normal|bold"
-                    android:typeface="normal"
-                    android:textSize="18sp"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
+                    android:alpha="100"
+                    android:padding="6dp"
+                    android:text="@string/hike_description"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold"
+                    android:typeface="normal" />
 
                 <TextView
                     android:id="@+id/other_hikes"
+                    style="?android:textAppearanceSmallInverse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="6dp"
-                    style="?android:textAppearanceSmallInverse"
-                    android:text="@string/other_hikes"
-                    android:alpha="100"
-                    android:textStyle="normal|bold"
-                    android:typeface="normal"
-                    android:textSize="14sp"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="15dp"
+                    android:alpha="100"
+                    android:padding="6dp"
+                    android:text="@string/other_hikes"
+                    android:textSize="14sp"
+                    android:textStyle="normal|bold"
+                    android:typeface="normal" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -106,27 +107,27 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:layout_marginLeft="140dp"
                         android:background="@drawable/img"
-                        android:src="@drawable/bishops"
-                        android:layout_marginLeft="140dp" />
+                        android:src="@drawable/bishops" />
 
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@drawable/img"
-                        android:src="@drawable/bishops"
                         android:layout_marginLeft="265dp"
+                        android:layout_marginRight="0dp"
+                        android:background="@drawable/img"
                         android:foregroundGravity="right"
-                        android:layout_marginRight="0dp" />
+                        android:src="@drawable/bishops" />
 
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@drawable/img"
-                        android:src="@drawable/bishops"
-                        android:layout_marginLeft="15dp"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/img"
+                        android:src="@drawable/bishops" />
 
                 </RelativeLayout>
 

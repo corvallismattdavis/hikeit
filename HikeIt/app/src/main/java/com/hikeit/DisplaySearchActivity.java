@@ -32,6 +32,9 @@ public class DisplaySearchActivity extends AppCompatActivity {
         curContext = this;
         final ListView hikeList = (ListView) findViewById(R.id.hike_list);
 
+        //Database call
+
+
         arrayList.add(new HikeListItem("bishops", "Bishop Peak", HikeListItem.Difficulty.Easy, 4.5f));
         arrayList.add(new HikeListItem("bishops", "Madonna", HikeListItem.Difficulty.Moderate, 4.8f));
         arrayList.add(new HikeListItem("bishops", "Avila Ridge", HikeListItem.Difficulty.Hard, 4.2f));
