@@ -1,6 +1,7 @@
 package com.hikeit;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     public void goToSearch (View view) {
         Intent startNewSearchActivity = new Intent(this, DisplaySearchActivity.class);
         startActivity(startNewSearchActivity);
-
     }
 
 }

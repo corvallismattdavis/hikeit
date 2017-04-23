@@ -62,7 +62,7 @@
         android:onClick="goToSearch"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/gear_icon" />
+        app:srcCompat="@drawable/ic_settings" />
 
     <ImageButton
         android:id="@+id/search_button"
@@ -74,5 +74,5 @@
         android:onClick="goToSearch"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/search_icon" />
+        app:srcCompat="@drawable/ic_menu_search_holo_dark" />
 </RelativeLayout>

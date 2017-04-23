@@ -106,7 +106,6 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
     public void getHike(View view)
     {
-        //causes crash
         Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
         startActivity(startNewHikeActivity);
     }
