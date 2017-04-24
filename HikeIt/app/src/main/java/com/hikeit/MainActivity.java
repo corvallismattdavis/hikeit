@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(startNewSearchActivity);
     }
 
-<<<<<<< HEAD
+
     public void goToMaps (View view) {
         Intent startNewMapsActivity = new Intent(this, MapsActivity.class);
         startActivity(startNewMapsActivity);
@@ -58,6 +58,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-=======
->>>>>>> 8fe1f1251340483d7e940a738b58aee8056a0c2b
 }

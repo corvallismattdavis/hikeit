@@ -47,10 +47,6 @@
         android:onClick="goToMaps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginTop="89dp"
-=======
->>>>>>> 8fe1f1251340483d7e940a738b58aee8056a0c2b
         android:id="@+id/button"
         android:elevation="0dp"
         android:layout_alignParentBottom="true"

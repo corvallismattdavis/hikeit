@@ -47,19 +47,6 @@ public class DisplaySearchActivity extends AppCompatActivity {
         allHikes = new ArrayList<HikeListItem>();
         final ListView hikeList = (ListView) findViewById(R.id.hike_list);
 
-<<<<<<< HEAD
-        //Database call
-
-
-        arrayList.add(new HikeListItem("bishops", "Bishop Peak", HikeListItem.Difficulty.Easy, 4.5f));
-        arrayList.add(new HikeListItem("bishops", "Madonna", HikeListItem.Difficulty.Moderate, 4.8f));
-        arrayList.add(new HikeListItem("bishops", "Avila Ridge", HikeListItem.Difficulty.Hard, 4.2f));
-        arrayList.add(new HikeListItem("bishops", "Cabrillo", HikeListItem.Difficulty.Extreme, 3.7f));
-        arrayList.add(new HikeListItem("bishops", "Cal Poly \"P\"", HikeListItem.Difficulty.Easy, 4.5f));
-        arrayList.add(new HikeListItem("bishops", "East Cuesta Ridge", HikeListItem.Difficulty.Moderate, 4.8f));
-        arrayList.add(new HikeListItem("bishops", "West Cuesta Ridge", HikeListItem.Difficulty.Hard, 4.2f));
-        arrayList.add(new HikeListItem("bishops", "Valencia Peak", HikeListItem.Difficulty.Extreme, 3.7f));
-=======
         searchView.setIconified(false);
         searchView.clearFocus();
 
@@ -91,7 +78,6 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
             }
         });
->>>>>>> 8fe1f1251340483d7e940a738b58aee8056a0c2b
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -120,6 +106,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
     public void getHike(View view)
     {
+        //causes crash
         Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
         startActivity(startNewHikeActivity);
     }

@@ -40,7 +40,6 @@
             android:name=".DisplaySearchActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/title_activity_display_search"
-<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -65,11 +64,7 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
              <!--</intent-filter>-->
         </activity>
-=======
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar"/>
->>>>>>> 8fe1f1251340483d7e940a738b58aee8056a0c2b
+
     </application>
 
 </manifest>
