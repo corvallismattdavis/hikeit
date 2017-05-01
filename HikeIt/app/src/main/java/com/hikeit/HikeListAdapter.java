@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Rating;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Jon on 4/12/2017.
@@ -94,22 +96,8 @@ class HikeListAdapter extends BaseAdapter {
 
         final ImageView icon = (ImageView) vi.findViewById(R.id.list_row_img);
 
-//        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl("gs://hikeit-c31a4.appspot.com/");
-//        ref.child("images/" + data[position].imgSrc + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Log.d("FILE DOWNLOAD", "Successfully loaded uri");
-//                icon.setImageURI(uri);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d("FILE DOWNLOAD", "Failed loading uri: " + e.getMessage());
-//                icon.setImageResource(R.drawable.empty_photo);
-//            }
-//        });
-
-//        vi.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
+        new DownloadImageTask((ImageView) icon).execute(data[position].imgSrc.get(0));
+        vi.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
 
         RatingBar rating = (RatingBar) vi.findViewById(R.id.list_row_rating);
         rating.setRating(data[position].rating);

@@ -11,8 +11,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/bishops"
+        android:layout_height="225dp"
+        app:srcCompat="@drawable/empty_photo"
         android:id="@+id/hike_img"
         android:layout_gravity="top|center_vertical"
         android:scaleType="fitXY"
@@ -34,8 +34,8 @@
         style="?android:textAppearanceSmallInverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/hike_img"
-        android:padding="12dp"
+        android:layout_above="@+id/ratingBar"
+        android:layout_marginLeft="12dp"
         android:text="@string/hike_title"
         android:textColor="@android:color/white"
         android:textSize="26sp"
@@ -44,16 +44,17 @@
 
     <android.support.v7.widget.AppCompatRatingBar
         android:id="@+id/ratingBar"
-        android:isIndicator="true"
-        android:progressBackgroundTint="@color/colorAccent"
-        android:progressTint="@color/colorAccent"
-        android:secondaryProgressTint="@color/colorAccent"
-        android:layout_below="@+id/hike_img"
-        android:layout_width="250dp"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hike_img"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:isIndicator="true"
         android:layoutDirection="ltr"
         android:numStars="5"
-        android:padding="5dp"
         android:rating="4.7"
         android:stepSize="0.1" />
 
@@ -66,8 +67,8 @@
         android:alpha="100"
         android:padding="6dp"
         android:text="@string/hike_description"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
         android:typeface="normal" />
 
     <TextView
@@ -80,97 +81,24 @@
         android:alpha="100"
         android:padding="6dp"
         android:text="@string/other_hikes"
+        android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="normal|bold"
         android:typeface="normal" />
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/other_hikes"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_height="175dp"
+        android:layout_below="@+id/other_hikes">
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10dp">
+            android:orientation="horizontal" >
+        </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/left_image"
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/bishops" />
-
-            <TextView
-                android:id="@+id/left_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/left_image"
-                android:padding="2dp"
-                android:text="@string/hike_title"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10dp">
-
-            <ImageButton
-                android:contentDescription="@string/hike_description"
-                android:id="@+id/center_image"
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/bishops" />
-
-            <TextView
-                android:id="@+id/center_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/center_image"
-                android:text="@string/hike_title"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:padding="2dp"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10dp">
-
-            <ImageButton
-                android:contentDescription="@string/hike_description"
-                android:id="@+id/right_image"
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/bishops" />
-
-            <TextView
-                android:id="@+id/right_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/right_image"
-                android:text="@string/hike_title"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:padding="2dp"
-                />
-        </RelativeLayout>
-
-    </LinearLayout>
+    </HorizontalScrollView>
 
 </RelativeLayout>

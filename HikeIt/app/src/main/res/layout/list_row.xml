@@ -20,7 +20,10 @@
             android:layout_height="120dp"
             android:src="@drawable/empty_photo"
             android:scaleType="centerCrop"
-            android:transitionName="image" />
+            android:transitionName="image"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <ProgressBar
             android:id="@+id/loading_spinner"
@@ -29,7 +32,10 @@
             android:layout_height="120dp"
             android:layout_alignParentStart="true"
             android:indeterminate="true"
-            android:layout_toStartOf="@+id/list_row_title" />
+            android:layout_toStartOf="@+id/list_row_title"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/list_row_difficulty"
@@ -40,7 +46,10 @@
             android:padding="@dimen/tiny_margin"
             style="?android:textAppearanceSmallInverse"
             android:background="@color/text_background"
-            tools:text="Overlay"/>
+            tools:text="Overlay"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/list_row_title"
@@ -53,7 +62,10 @@
             android:maxLines="1"
             android:ellipsize="end"
             style="?android:textAppearanceMedium"
-            tools:text="Title 1" />
+            tools:text="Title 1"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/list_row_length"
@@ -65,21 +77,27 @@
             android:ellipsize="end"
             android:maxLines="4"
             style="?android:textAppearanceSmall"
-            tools:text="Description goes here" />
+            tools:text="Description goes here"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <RatingBar
+            android:id="@+id/list_row_rating"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_row_rating"
-            android:numStars="5"
-            android:rating="4.7"
-            android:layoutDirection="ltr"
-            android:stepSize="0.1"
-            android:padding="0dp"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/list_row_img"
-            android:clickable="false" />
+            android:clickable="false"
+            android:focusable="false"
+            android:isIndicator="true"
+            android:hapticFeedbackEnabled="false"
+            android:layoutDirection="ltr"
+            android:numStars="5"
+            android:padding="0dp"
+            android:rating="4.7"
+            android:stepSize="0.1" />
 
     </RelativeLayout>
 

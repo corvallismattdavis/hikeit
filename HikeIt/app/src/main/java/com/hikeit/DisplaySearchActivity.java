@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,15 +38,32 @@ public class DisplaySearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_search);
 
         curContext = this;
+
+        ListView hikeList = (ListView) findViewById(R.id.hike_list);
+
+//        hikeList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+//        {
+//            @Override
+//            public void onItemSelected(AdapterView parentView, View childView, int position, long id)
+//            {
+//                getHike(position);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView parentView)
+//            {
+//            }
+//        });
+
     }
 
     @Override
     public void onStart()
     {
         super.onStart();
+        allHikes = new ArrayList<HikeListItem>();
 
         final SearchView searchView = (SearchView) findViewById(R.id.search);
-        allHikes = new ArrayList<HikeListItem>();
         final ListView hikeList = (ListView) findViewById(R.id.hike_list);
 
         searchView.setIconified(false);
@@ -57,7 +76,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
                     String difficulty = (String) jsonValue.get("difficulty");
-                    String imgSrc = (String) jsonValue.get("imgSrc");
+                    ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
                     float distance = (float)((double)jsonValue.get("distance"));
                     float rating = (float)((double)jsonValue.get("rating"));
 
@@ -106,8 +125,10 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
     public void getHike(View view)
     {
-        //causes crash
         Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
+        Bundle b = new Bundle();
+        b.putString("src", allHikes.get(0).imgSrc.get(0));
+        startNewHikeActivity.putExtras(b);
         startActivity(startNewHikeActivity);
     }
 }

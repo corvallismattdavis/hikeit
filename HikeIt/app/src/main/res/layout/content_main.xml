@@ -60,10 +60,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:background="@null"
-        android:onClick="goToSearch"
+        android:onClick="goToAccount"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_settings" />
+        app:srcCompat="@drawable/login_usericon" />
 
     <ImageButton
         android:id="@+id/search_button"

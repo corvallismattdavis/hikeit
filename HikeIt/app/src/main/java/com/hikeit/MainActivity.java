@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(startNewSearchActivity);
     }
 
+    public void goToAccount (View view) {
+        Intent accountActivity = new Intent(this, LoginActivity.class);
+        startActivity(accountActivity);
+    }
 
     public void goToMaps (View view) {
         Intent startNewMapsActivity = new Intent(this, MapsActivity.class);
