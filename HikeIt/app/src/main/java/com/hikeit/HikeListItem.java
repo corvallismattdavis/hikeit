@@ -17,14 +17,15 @@ public class HikeListItem {
     public float lat = 30;
     public float lg = -120;
 
-    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lat, float lg)
+    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi)
     {
         imgSrc = img;
         this.title = title;
         difficulty = diff;
         this.rating = rating;
         distance = dist;
-        lat = lat;
-        lg = lg;
+        lat = lati;
+        lg = lgi;
+
     }
 }
