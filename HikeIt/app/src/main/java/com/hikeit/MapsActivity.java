@@ -114,11 +114,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     float longLoop = allHikes.get(i).lg;
                     LatLng loopLL = new LatLng(latLoop, longLoop);
 
-                    System.out.println("LatLng: " + loopLL + "latloop: " + allHikes.get(i).lat);
-
                     mMap.addMarker(new MarkerOptions()
                         .position(loopLL)
-                        .title(allHikes.get(i).title));
+                        .title(allHikes.get(i).title)
+                        .snippet("Distance: " + allHikes.get(i).distance + " miles"));
                 }
             }
 //
