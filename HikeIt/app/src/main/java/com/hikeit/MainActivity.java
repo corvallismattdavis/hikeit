@@ -11,8 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToAccount (View view) {
-        Intent accountActivity = new Intent(this, LoginActivity.class);
-        startActivity(accountActivity);
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null)
+        {
+            Intent accountActivity = new Intent(this, AccountLoggedInActivity.class);
+            startActivity(accountActivity);
+        }
+        else
+        {
+            Intent loginActivity = new Intent(this, LoginActivity.class);
+            startActivity(loginActivity);
+        }
     }
 
     public void goToMaps (View view) {

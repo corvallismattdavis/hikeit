@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/content_account_logged_in"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.hikeit.AccountLoggedInActivity"
+    tools:showIn="@layout/activity_account_logged_in">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            android:src="@drawable/login_usericon">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/account_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="username"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:paddingStart="10dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/sign_out"
+        android:onClick="signoutClicked"/>
+
+</RelativeLayout>

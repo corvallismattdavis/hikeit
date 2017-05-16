@@ -75,7 +75,11 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".AccountLoggedInActivity"
+            android:label="@string/title_activity_account_logged_in"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

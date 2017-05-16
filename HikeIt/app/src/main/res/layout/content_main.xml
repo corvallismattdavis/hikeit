@@ -63,7 +63,7 @@
         android:onClick="goToAccount"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/login_usericon" />
+        app:srcCompat="@drawable/my_profile_icon_white" />
 
     <ImageButton
         android:id="@+id/search_button"

@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -108,9 +110,9 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
-                //callSearch(newText);
-//              }
+                  if (TextUtils.isEmpty(newText)) {
+                     callSearch(newText);
+                  }
                 return true;
             }
 

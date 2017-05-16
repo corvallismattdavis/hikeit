@@ -32,7 +32,7 @@ public class HikeActivity extends AppCompatActivity {
             src = b.getString("src");
         }
 
-        new DownloadImageTask((ImageView) findViewById(R.id.hike_img)).execute(src);
+        //new DownloadImageTask((ImageView) findViewById(R.id.hike_img)).execute(src);
     }
 
     private void SetImageGallery()

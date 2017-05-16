@@ -95,8 +95,8 @@ class HikeListAdapter extends BaseAdapter {
         distance.setText((data[position].distance + " miles"));
 
         final ImageView icon = (ImageView) vi.findViewById(R.id.list_row_img);
-
-        new DownloadImageTask((ImageView) icon).execute(data[position].imgSrc.get(0));
+        int id = context.getResources().getIdentifier("drawable/" + data[position].imgSrc.get(0), null, context.getPackageName());
+        icon.setImageResource(id);
         vi.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
 
         RatingBar rating = (RatingBar) vi.findViewById(R.id.list_row_rating);
