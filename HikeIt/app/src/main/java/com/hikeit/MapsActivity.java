@@ -25,7 +25,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import android.support.v4.app.ActivityCompat;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -38,6 +47,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+
+    //Database Stuff
+    private FirebaseDatabase fbDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference rootRef = fbDatabase.getReference();
+    private DatabaseReference childHikeRef = rootRef.child("hikes");
+    private ArrayList<HikeListItem> allHikes = new ArrayList<HikeListItem>();
+
+    //Marker variables
+    private static final LatLng BISHOP = new LatLng(35.3025, -120.6974);
+    //AKA Cerro San Luis
+    private static final LatLng MADONNA = new LatLng(35.2828, -120.6804);
+    //Valencia Peak
+    private static final LatLng VALENCIA = new LatLng(35.2632, -120.8721);
+    //Cerro Cabrillo
+    private static final LatLng CERRO_CABRILLO = new LatLng(35.3521, -120.8150);
+    //Irish Hills Natural Reserve
+    private static final LatLng IRISH = new LatLng(35.2606, -120.7056);
+    //Terrace Hill
+    private static final LatLng TERRACE = new LatLng(35.273, -120.65);
+    //Johnson Ranch Open Space
+    private static final LatLng JOHNRANCH = new LatLng(35.2282, -120.6972);
+    //WEST Cuesta Ridge
+    private static final LatLng CUESTAWEST = new LatLng(35.347193, -120.629944);
+    //Cal Poly "P"
+    private static final LatLng POLYP = new LatLng(35.302801, -120.651702);
+    //Reservoir Canyon Trailhead Parking Area
+    private static final LatLng RESCANY = new LatLng(35.291159, -120.627435);
+    //Oats Peak
+    private static final LatLng OATS = new LatLng(35.2530, -120.8524);
+
+
+    private Marker mBishop;
+    private Marker mMadonna;
+    private Marker mValencia;
+    private Marker mCerroC;
+    private Marker mIrish;
+    private Marker mTerrace;
+    private Marker mJohn;
+    private Marker mWcuesta;
+    private Marker mPolyp;
+    private Marker mResCany;
+    private Marker mOats;
+
+
+
+
 
 
     @Override
@@ -56,15 +111,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    //START FOR DATABASE STUFF
+//    @Override
+//    public void onStart() {
+//
+//        super.onStart();
+//        allHikes = new ArrayList<HikeListItem>();
+//
+//        childHikeRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+//                    HashMap<String, Object> jsonValue = (HashMap<String, Object>) messageSnapshot.getValue();
+//                    String title = (String) jsonValue.get("title");
+//                    String difficulty = (String) jsonValue.get("difficulty");
+//                    ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
+//                    float distance = (float) ((double) jsonValue.get("distance"));
+//                    float rating = (float) ((double) jsonValue.get("rating"));
+//
+//                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance));
+//                }
+//
+////                initAdapter();
+//            }
+////
+////            public void initAdapter()
+////            {
+////                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
+////                hikeList.setAdapter(adapter);
+////            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -87,9 +170,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Sydney Marker"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Sydney Marker"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        //Test Adding marker for Bishops Peak
+        mBishop = mMap.addMarker(new MarkerOptions()
+            .position(BISHOP)
+            .title("BISHOPS"));//change the name to the database name
+
+        //Adding Waypoints(Markers) to the Map:
+
+        mMadonna = mMap.addMarker(new MarkerOptions()
+                .position(MADONNA)
+                .title("MADONNA"));//change the name to the database name
+
+        mCerroC = mMap.addMarker(new MarkerOptions()
+                .position(CERRO_CABRILLO)
+                .title("CERRO_CABRILLO"));//change the name to the database name
+
+        mIrish = mMap.addMarker(new MarkerOptions()
+                .position(IRISH)
+                .title("Irish Hills Natural Reserve"));//change the name to the database name
+
+        mValencia = mMap.addMarker(new MarkerOptions()
+                .position(VALENCIA)
+                .title("VALENCIA"));//change the name to the database name
+
+        mTerrace = mMap.addMarker(new MarkerOptions()
+                .position(TERRACE)
+                .title("TERRACE HILL"));//change the name to the database name
+
+        mJohn = mMap.addMarker(new MarkerOptions()
+                .position(JOHNRANCH)
+                .title("JOHNRANCH"));//change the name to the database name
+
+        mWcuesta = mMap.addMarker(new MarkerOptions()
+                .position(CUESTAWEST)
+                .title("West Cuesta Ridge"));//change the name to the database name
+
+        mPolyp = mMap.addMarker(new MarkerOptions()
+                .position(POLYP)
+                .title("Cal Poly 'P'"));//change the name to the database name
+
+        mResCany = mMap.addMarker(new MarkerOptions()
+                .position(RESCANY)
+                .title("Reservoir Canyon Trailhead Parking Area"));//change the name to the database name
+
+        mOats = mMap.addMarker(new MarkerOptions()
+                .position(OATS)
+                .title("Oats Peak"));//change the name to the database name
+
+
+//        LatLng bishopPeak = new LatLng(35, 120);
+//        mMap.addMarker(new MarkerOptions().position(bishopPeak).title("Bishops Peak Marker"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(bishopPeak));
+
+
+
+        //now get the info from firebase
+
     }
 
     protected synchronized void buildGoogleApiClient() {
