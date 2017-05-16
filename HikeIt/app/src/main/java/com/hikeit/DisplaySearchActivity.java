@@ -81,8 +81,10 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
                     float distance = (float)((double)jsonValue.get("distance"));
                     float rating = (float)((double)jsonValue.get("rating"));
+                    float lat = (float) ((double) jsonValue.get("lat"));
+                    float lg = (float) ((double) jsonValue.get("lg"));
 
-                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance));
+                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg));
                 }
 
 //                initAdapter();
@@ -130,6 +132,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
         Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
         Bundle b = new Bundle();
         b.putString("src", allHikes.get(0).imgSrc.get(0));
+
         startNewHikeActivity.putExtras(b);
         startActivity(startNewHikeActivity);
     }

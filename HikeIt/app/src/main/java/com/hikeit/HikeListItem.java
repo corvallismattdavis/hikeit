@@ -14,13 +14,17 @@ public class HikeListItem {
     public Difficulty difficulty = Difficulty.Easy;
     public float rating = 1.0f;
     public float distance = 1.5f;
+    public float lat = 30;
+    public float lg = -120;
 
-    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist)
+    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lat, float lg)
     {
         imgSrc = img;
         this.title = title;
         difficulty = diff;
         this.rating = rating;
         distance = dist;
+        lat = lat;
+        lg = lg;
     }
 }

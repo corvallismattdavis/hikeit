@@ -112,45 +112,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     //START FOR DATABASE STUFF
-//    @Override
-//    public void onStart() {
+    @Override
+    public void onStart() {
+
+        super.onStart();
+        allHikes = new ArrayList<HikeListItem>();
+
+        childHikeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    HashMap<String, Object> jsonValue = (HashMap<String, Object>) messageSnapshot.getValue();
+                    String title = (String) jsonValue.get("title");
+                    String difficulty = (String) jsonValue.get("difficulty");
+                    ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
+                    float distance = (float) ((double) jsonValue.get("distance"));
+                    float rating = (float) ((double) jsonValue.get("rating"));
+                    float lat = (float) ((double) jsonValue.get("lat"));
+                    float lg = (float) ((double) jsonValue.get("lg"));
+
+                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg));
+
+                }
+
+//                initAdapter();
+            }
 //
-//        super.onStart();
-//        allHikes = new ArrayList<HikeListItem>();
-//
-//        childHikeRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-//                    HashMap<String, Object> jsonValue = (HashMap<String, Object>) messageSnapshot.getValue();
-//                    String title = (String) jsonValue.get("title");
-//                    String difficulty = (String) jsonValue.get("difficulty");
-//                    ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
-//                    float distance = (float) ((double) jsonValue.get("distance"));
-//                    float rating = (float) ((double) jsonValue.get("rating"));
-//
-//                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance));
-//                }
-//
-////                initAdapter();
+//            public void initAdapter()
+//            {
+//                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
+//                hikeList.setAdapter(adapter);
 //            }
-////
-////            public void initAdapter()
-////            {
-////                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
-////                hikeList.setAdapter(adapter);
-////            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
 
         //Get users location
 
@@ -174,7 +178,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Sydney Marker"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+
+//        for (int i = 0; i < allHikes.size(); i++) {
+//            float latLoop = allHikes.get(i).lat;
+//            float longLoop = allHikes.get(i).lg;
+//            LatLng loopLL = new LatLng(latLoop, longLoop);
+//
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(loopLL)
+//                    .title(allHikes.get(i).title));
+//        }
+
         //Test Adding marker for Bishops Peak
+
+        //System.out.println("LAT BISHOP: " + allHikes.get(0).lat);
+
         mBishop = mMap.addMarker(new MarkerOptions()
             .position(BISHOP)
             .title("BISHOPS"));//change the name to the database name
@@ -224,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 //        LatLng bishopPeak = new LatLng(35, 120);
 //        mMap.addMarker(new MarkerOptions().position(bishopPeak).title("Bishops Peak Marker"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(bishopPeak));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(bishopPeak));
 
 
 
