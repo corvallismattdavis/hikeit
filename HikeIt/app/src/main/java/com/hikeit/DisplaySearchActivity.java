@@ -124,6 +124,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
                 hikeList.setAdapter(adapter);
             }
 
+
         });
     }
 
