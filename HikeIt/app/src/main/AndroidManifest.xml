@@ -44,9 +44,7 @@
         <activity
             android:name=".BottomNavBarActivity"
             android:windowSoftInputMode="adjustPan"
-            android:alwaysRetainTaskState="true"
             android:label="@string/title_activity_hike"
-            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DisplaySearchActivity"

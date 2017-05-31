@@ -151,6 +151,7 @@ public class LoginFragment extends Fragment implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("LOGIN", "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
+                            startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LOGIN", "signInWithCredential:failure", task.getException());

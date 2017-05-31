@@ -91,6 +91,13 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
         startActivity(startNewHikeActivity);
     }
 
+    public void signoutClicked (View view) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
+
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
     @Override
     public void onSearchFragmentInteraction(String string)
     {
