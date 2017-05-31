@@ -1,11 +1,13 @@
 package com.hikeit;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import android.widget.AdapterView;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -119,6 +122,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .title(allHikes.get(i).title)
                         .snippet("Distance: " + allHikes.get(i).distance + " miles"));
                 }
+
+                //onClick of InfoWindow -> start new activity
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(MapsActivity.this,HikeActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+
             }
 //
 //            public void initAdapter()
@@ -132,10 +146,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-
-
-
-
 
 
         //Get users location
@@ -152,17 +162,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
-
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Sydney Marker"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-
-//        LatLng bishopPeak = new LatLng(35, 120);
-//        mMap.addMarker(new MarkerOptions().position(bishopPeak).title("Bishops Peak Marker"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(bishopPeak));
 
 
     }
