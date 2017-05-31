@@ -1,6 +1,12 @@
 package com.hikeit;
 
-import android.animation.Animator;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -50,19 +56,23 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
+
 /**
- * A login screen that offers login via email/password.
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link LoginFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link LoginFragment#newInstance} factory method to
+ * create an instance of this fragment.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener {
+public class LoginFragment extends Fragment implements
+        GoogleApiClient.OnConnectionFailedListener {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
+    private OnFragmentInteractionListener mListener;
+
     private static final int REQUEST_READ_CONTACTS = 0;
-
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth auth;
@@ -73,67 +83,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private ProgressBar progressBar;
+
+    public LoginFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment LoginFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static LoginFragment newInstance() {
+        LoginFragment fragment = new LoginFragment();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
-        auth = FirebaseAuth.getInstance();
-        progressBar = (ProgressBar) findViewById(R.id.login_progress);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("334196322464-b9p9flq1skdl9tdrp434dr8qj8p1rrsb.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
-
-        SignInButton google = (SignInButton) findViewById(R.id.google_button);
-        google.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
-
-        Button register = (Button) findViewById(R.id.register_button);
-        register.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerUser();
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     @Override
@@ -156,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d("LOGIN", "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -165,19 +144,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("LOGIN", "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LOGIN", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -189,40 +167,128 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_login, container, false);
+    }
 
-        getLoaderManager().initLoader(0, null, this);
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(String string) {
+        if (mListener != null) {
+            mListener.onLoginFragmentInteraction(string);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        public void onLoginFragmentInteraction(String string);
+    }
+    private ProgressBar progressBar;
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        // Set up the login form.
+        mEmailView = (AutoCompleteTextView) getView().findViewById(R.id.email);
+
+        auth = FirebaseAuth.getInstance();
+        progressBar = (ProgressBar) getView().findViewById(R.id.login_progress);
+
+        mPasswordView = (EditText) getView().findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        Button mEmailSignInButton = (Button) getView().findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
+
+        SignInButton google = (SignInButton) getView().findViewById(R.id.google_button);
+        google.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+
+        Button register = (Button) getView().findViewById(R.id.register_button);
+        register.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser();
+            }
+        });
+
+        mLoginFormView = getView().findViewById(R.id.login_form);
+        mProgressView = getView().findViewById(R.id.login_progress);
     }
 
     private void registerUser()
     {
-        EditText inputEmail = (EditText) findViewById(R.id.email);
-        EditText inputPassword = (EditText) findViewById(R.id.password);
+        EditText inputEmail = (EditText) getView().findViewById(R.id.email);
+        EditText inputPassword = (EditText) getView().findViewById(R.id.password);
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Enter email address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Enter password!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (password.length() < 6) {
-            Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         //progressBar.setVisibility(View.VISIBLE);
         //create user
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -230,51 +296,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Email already in use.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Email already in use.", Toast.LENGTH_LONG).show();
                             Log.e("LoginActivity", "Failed Registration", task.getException());
                         } else {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
+                            startActivity(new Intent(getActivity(), MainActivity.class));
                         }
                     }
                 });
     }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -323,16 +352,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             progressBar.setVisibility(View.VISIBLE);
 
             auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
 
                             progressBar.setVisibility(View.GONE);
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Login failed! Invalid email or password,\nPlease try again.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Login failed! Invalid email or password,\nPlease try again.", Toast.LENGTH_LONG).show();
                             } else {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
                             }
                         }
                     });
@@ -384,59 +412,4 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
 }
-

@@ -9,6 +9,5 @@
     tools:context="com.hikeit.HikeActivity">
 
     <include layout="@layout/content_hike" />
-    <include layout="@layout/activity_bottom_nav_bar" />
 
 </android.support.design.widget.CoordinatorLayout>

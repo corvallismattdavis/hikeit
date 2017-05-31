@@ -49,19 +49,16 @@ class HikeListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return data.length;
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return data[position];
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -79,28 +76,42 @@ class HikeListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View vi = convertView;
+        ViewHolder holder;
 
-        if (vi == null)
-            vi = inflater.inflate(R.layout.list_row, null);
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.list_row, parent, false);
 
-        TextView title = (TextView) vi.findViewById(R.id.list_row_title);
-        title.setText(data[position].title);
+            holder.title = (TextView) convertView.findViewById(R.id.list_row_title);
+            holder.difficulty  = (TextView) convertView.findViewById(R.id.list_row_difficulty);
+            holder.distance = (TextView) convertView.findViewById(R.id.list_row_length);
+            holder.icon = (ImageView) convertView.findViewById(R.id.list_row_img);
+            holder.rating = (RatingBar) convertView.findViewById(R.id.list_row_rating);
 
-        TextView difficulty = (TextView) vi.findViewById(R.id.list_row_difficulty);
-        difficulty.setText(data[position].difficulty.toString());
+            convertView.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-        TextView distance = (TextView) vi.findViewById(R.id.list_row_length);
-        distance.setText((data[position].distance + " miles"));
+        HikeListItem hike = data[position];
+        holder.title.setText(hike.title);
+        holder.difficulty.setText(hike.difficulty.toString());
+        holder.distance.setText(hike.distance + " miles");
+        holder.rating.setRating(hike.rating);
 
-        final ImageView icon = (ImageView) vi.findViewById(R.id.list_row_img);
         int id = context.getResources().getIdentifier("drawable/" + data[position].imgSrc.get(0), null, context.getPackageName());
-        icon.setImageResource(id);
-        vi.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
+        holder.icon.setImageResource(id);
 
-        RatingBar rating = (RatingBar) vi.findViewById(R.id.list_row_rating);
-        rating.setRating(data[position].rating);
-        return vi;
+        return convertView;
+    }
+
+    private class ViewHolder {
+        TextView title;
+        TextView difficulty;
+        TextView distance;
+        ImageView icon;
+        RatingBar rating;
     }
 }

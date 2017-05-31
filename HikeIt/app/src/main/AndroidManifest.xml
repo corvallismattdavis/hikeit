@@ -42,6 +42,13 @@
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".BottomNavBarActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:alwaysRetainTaskState="true"
+            android:label="@string/title_activity_hike"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".DisplaySearchActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/title_activity_display_search"
@@ -70,9 +77,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
