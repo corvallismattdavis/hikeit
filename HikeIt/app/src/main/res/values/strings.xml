@@ -7,6 +7,8 @@
     <string name="hike_title">Bishop Peak</string>
     <string name="hike_description">This is a short description of the hike and its location. </string>
     <string name="other_hikes">Pictures:</string>
+    <string name="reviewHeader">Reviews:</string>
+    <string name="reviewText">this is where review text will live</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_bottombaractivity">bottombaractivity</string>

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -84,6 +85,8 @@ public class SearchFragment extends Fragment {
 
         startNewHikeActivity.putExtras(b);
         startActivity(startNewHikeActivity);
+
+        //hikeList.setOnClickListener(new OnItemClickListener())
     }
 
     @Override
@@ -99,6 +102,7 @@ public class SearchFragment extends Fragment {
 
         final SearchView searchView = (SearchView) getView().findViewById(R.id.search);
         final ListView hikeList = (ListView) getView().findViewById(R.id.hike_list);
+
 
         searchView.setIconified(false);
         searchView.clearFocus();
@@ -131,6 +135,8 @@ public class SearchFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -184,10 +190,15 @@ public class SearchFragment extends Fragment {
 
                 HikeListAdapter adapter = new HikeListAdapter(getActivity(), allHikes.toArray(new HikeListItem[0]));
                 hikeList.setAdapter(adapter);
+
             }
 
-
         });
+    }
+
+
+    public void onItemClick(AdapterView<HikeListAdapter> adapter, View v, int position, long id) {
+         HikeListItem clickedHike = (HikeListItem) adapter.getItemAtPosition(position);
     }
 
     @Override
