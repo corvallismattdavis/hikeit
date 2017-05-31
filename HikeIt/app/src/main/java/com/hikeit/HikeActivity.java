@@ -120,4 +120,18 @@ public class HikeActivity extends AppCompatActivity {
         }
     }
 
+    private void ReviewHike() {
+
+        //Write a review about this hike:
+            //prompt for a star rating
+            //go into database (incremenet counter for number of reviews)
+            //update the rating based on (+= review score / number of reviews)
+
+        //Add text to your review:
+            //create string buffer that will create a variable in the database holding the sentence
+            //display the reviews in a separate section
+            //
+
+    }
+
 }

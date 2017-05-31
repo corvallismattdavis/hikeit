@@ -1,5 +1,6 @@
 package com.hikeit;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,12 +8,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +75,7 @@ public class SearchFragment extends Fragment {
         Init();
     }
 
+
     public void getHike(View view)
     {
         Intent startNewHikeActivity = new Intent(getActivity(), HikeActivity.class);
@@ -114,13 +119,12 @@ public class SearchFragment extends Fragment {
                     allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg));
                 }
 
-//                initAdapter();
+                //initAllHikes();
             }
-//
-//            public void initAdapter()
+
+//            public void initAllHikes()
 //            {
-//                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
-//                hikeList.setAdapter(adapter);
+//                passData(allHikes.get(0).title);
 //            }
 
             @Override
@@ -212,9 +216,28 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    public interface OnDataPass {
+        public void onDataPass(ArrayList<HikeListItem> data);
+    }
+
+    OnDataPass dataPasser;
+
+
+    //need either an index for which you can load information from database into hikeActivity
+        //this number can be taken from a clickListener that is applied to search view
+
+
+    public void passData(ArrayList<HikeListItem> allHikes) {
+        dataPasser.onDataPass(allHikes);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        dataPasser = (OnDataPass) context; //prep to send allHike info
+
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -87,13 +88,12 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg));
                 }
 
-//                initAdapter();
+                //callIntent();
             }
-//
-//            public void initAdapter()
+
+//            public void callIntent()
 //            {
-//                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
-//                hikeList.setAdapter(adapter);
+//                Log.d(DisplaySearchActivity.class.getSimpleName(), allHikes.get(0).title);
 //            }
 
             @Override
@@ -130,11 +130,13 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
     public void getHike(View view)
     {
-        Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
-        Bundle b = new Bundle();
-        b.putString("src", allHikes.get(0).imgSrc.get(0));
+        Intent startNewHikeActivity = new Intent(this, HikeActivity.class).putExtra("<StringName>", allHikes.get(0).title);
+        //Bundle b = new Bundle();
+        //b.putString("src", allHikes.get(0).imgSrc.get(0));
+        //Log.d(DisplaySearchActivity.class.getSimpleName(), allHikes.get(0).title);
+        //string hikeName = ("")
 
-        startNewHikeActivity.putExtras(b);
+        //startNewHikeActivity.putExtras(b);
         startActivity(startNewHikeActivity);
     }
 }

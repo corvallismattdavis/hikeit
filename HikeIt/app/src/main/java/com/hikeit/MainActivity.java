@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToMaps (View view) {
-        Intent mainMenu = new Intent(this, BottomNavBarActivity.class);
-        startActivity(mainMenu);
+        Intent maps = new Intent(this, MapsActivity.class);
+        startActivity(maps);
     }
 
 

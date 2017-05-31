@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class BottomNavBarActivity extends AppCompatActivity implements SearchFragment.OnFragmentInteractionListener,
                                                                        MapFragment.OnFragmentInteractionListener,
                                                                        AccountLoggedInFragment.OnFragmentInteractionListener,
+                                                                        SearchFragment.OnDataPass,
                                                                        LoginFragment.OnFragmentInteractionListener
 {
 
@@ -75,10 +79,20 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
     }
 
+
+
+
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
+    }
+
+
+    //get info from SearchFragment for HikeActivity Page
+    @Override
+    public void onDataPass(ArrayList<HikeListItem> allHikes) {
+        Log.d("LOG","hello " + allHikes.get(0).title);
     }
 
     public void getHike(View view)
@@ -87,6 +101,9 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
 //        Bundle b = new Bundle();
 //        b.putString("src", allHikes.get(0).imgSrc.get(0));
 //
+
+        //get allHikes info from SearchFragment.java to send to HikeActivity.java
+
 //        startNewHikeActivity.putExtras(b);
         startActivity(startNewHikeActivity);
     }
