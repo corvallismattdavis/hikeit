@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground"
+    android:descendantFocusability="blocksDescendants">
+
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="127dp">
+
+<TextView
+    android:id="@+id/list_row_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/list_row_rating"
+    android:paddingTop="@dimen/small_margin"
+    android:paddingLeft="@dimen/small_margin"
+    android:paddingRight="@dimen/small_margin"
+    android:maxLines="1"
+    android:ellipsize="end"
+    style="?android:textAppearanceMedium"
+    tools:text="Review the user has left will appear here......."
+    android:focusableInTouchMode="false"
+    android:clickable="false"
+    android:focusable="false"/>
+
+<TextView
+    android:id="@+id/list_row_length"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/list_row_title"
+    android:padding="@dimen/small_margin"
+    android:ellipsize="end"
+    android:maxLines="4"
+    style="?android:textAppearanceSmall"
+    tools:text="User Who Left Review"
+    android:focusableInTouchMode="false"
+    android:clickable="false"
+    android:focusable="false"/>
+
+<RatingBar
+    android:id="@+id/list_row_rating"
+    style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:focusable="false"
+    android:isIndicator="true"
+    android:hapticFeedbackEnabled="false"
+    android:layoutDirection="ltr"
+    android:numStars="5"
+    android:padding="0dp"
+    android:rating="4.7"
+    android:stepSize="0.1"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+</FrameLayout>

@@ -20,8 +20,9 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
     public float distance = 1.5f;
     public float lat = 30;
     public float lg = -120;
+    public long count = 1; //count represents the numOfRatings in the DB
 
-    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi)
+    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi, long cnt)
     {
         imgSrc = img;
         this.title = title;
@@ -30,6 +31,7 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
         distance = dist;
         lat = lati;
         lg = lgi;
+        count = cnt;
 
     }
 
@@ -41,6 +43,7 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
         this.distance = in.readFloat();
         this.lat = in.readFloat();
         this.lg = in.readFloat();
+        this.count = in.readInt();
     }
 
     public static Comparator<HikeListItem> COMPARE_BY_CLOSE_TO_ME = new Comparator<HikeListItem>() {
@@ -83,6 +86,7 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
         dest.writeFloat(distance);
         dest.writeFloat(lat);
         dest.writeFloat(lg);
+        dest.writeLong(count);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public HikeListItem createFromParcel(Parcel in) {

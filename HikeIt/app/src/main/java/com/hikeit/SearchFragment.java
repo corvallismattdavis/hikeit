@@ -119,8 +119,9 @@ public class SearchFragment extends Fragment {
                     float rating = (float)((double)jsonValue.get("rating"));
                     float lat = (float) ((double) jsonValue.get("lat"));
                     float lg = (float) ((double) jsonValue.get("lg"));
+                    long numRatings = (long) jsonValue.get("numRatings");
 
-                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg));
+                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings));
                 }
 
                 //initAllHikes();

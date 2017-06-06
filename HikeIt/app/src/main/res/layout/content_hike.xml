@@ -101,19 +101,19 @@
         android:layout_below="@+id/horizontal_scroll"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/reviewDescrpt"
-        style="?android:textAppearanceSmallInverse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="100"
-        android:padding="6dp"
-        android:text="@string/reviewText"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:typeface="normal"
-        android:layout_below="@+id/reviewHeader"
-        android:layout_alignParentStart="true" />
+    <ListView
+        android:id="@+id/review_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_below ="@+id/reviewHeader"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp" >
+    </ListView>
 
     <HorizontalScrollView
         android:id="@+id/horizontal_scroll"
