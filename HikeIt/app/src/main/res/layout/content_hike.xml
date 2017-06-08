@@ -92,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="100"
-        android:padding="6dp"
+        android:padding="17dp"
         android:text="Reviews:"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -105,7 +105,6 @@
         android:id="@+id/review_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
         android:layout_below ="@+id/reviewHeader"
         android:background="@android:color/transparent"
@@ -130,6 +129,17 @@
 
     </HorizontalScrollView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:backgroundTint="@color/white"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:layout_marginStart="82dp"
+        android:layout_above="@+id/review_list"
+        android:layout_alignStart="@+id/ratingBar" />
 
 
 </RelativeLayout>
