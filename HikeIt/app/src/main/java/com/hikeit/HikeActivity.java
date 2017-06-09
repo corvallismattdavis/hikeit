@@ -1,5 +1,6 @@
 package com.hikeit;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Rating;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -242,27 +244,20 @@ public class HikeActivity extends AppCompatActivity {
     }
 
     private void ReviewHike() {
-
-        //Write a review about this hike:
-            //prompt for a star rating
-            //go into database (incremenet counter for number of reviews)
-            //update the rating based on (+= review score / number of reviews)
-
-        //Add text to your review:
-            //create string buffer that will create a variable in the database holding the sentence
-            //display the reviews in a separate section
-            //
-
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("hikes/" +
-                                                        Integer.toString(dbIndices.get(thisHike.imgSrc.get(0))) +
-                                                        "/reviews");
-        Review rev = new Review("6/7/17", 3, "test3@gmail.com", "This hike was pretty decent.");
-        reviews.add(rev);
-        ArrayList<Review> revList = new ArrayList<Review>();
-        revList.add(rev);
-        myRef.setValue(reviews);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null)
+        {
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
+        else
+        {
+            Intent review = new Intent(this, ReviewPopUp.class);
+            Bundle b = new Bundle();
+            b.putString("title", thisHike.imgSrc.get(0));
+            review.putExtras(b);
+            startActivity(review);
+        }
 
         displayReviews();
 
