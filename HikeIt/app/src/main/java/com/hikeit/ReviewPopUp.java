@@ -32,6 +32,7 @@ public class ReviewPopUp extends AppCompatActivity {
     ArrayList<Review> reviews = new ArrayList<Review>();
     HashMap<String, Integer> dbIndices = new HashMap<String, Integer>();
     String hikeTitle = "bishops";
+    String hike = "Bishop Peak";
 
     private FirebaseDatabase fbDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference rootRef = fbDatabase.getReference();
@@ -55,6 +56,7 @@ public class ReviewPopUp extends AppCompatActivity {
         dbIndices.put("irishhills", 10);
 
         hikeTitle = getIntent().getExtras().getString("title");
+        hike = getIntent().getExtras().getString("hikes");
 
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,7 +125,7 @@ public class ReviewPopUp extends AppCompatActivity {
 
         Intent backToHike = new Intent(this, HikeActivity.class);
         Bundle b = new Bundle();
-        b.putString("title", hikeTitle);
+        b.putString("title", hike);
         backToHike.putExtras(b);
         startActivity(backToHike);
     }

@@ -255,6 +255,7 @@ public class HikeActivity extends AppCompatActivity {
             Intent review = new Intent(this, ReviewPopUp.class);
             Bundle b = new Bundle();
             b.putString("title", thisHike.imgSrc.get(0));
+            b.putString("hike", thisHike.title);
             review.putExtras(b);
             startActivity(review);
         }
