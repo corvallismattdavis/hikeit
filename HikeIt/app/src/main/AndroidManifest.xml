@@ -38,15 +38,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HikeActivity"
-            android:label="@string/title_activity_hike"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".BottomNavBarActivity"
             android:label="@string/title_activity_hike"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".HikeActivity"
+            android:label="@string/title_activity_hike"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".DisplaySearchActivity"
             android:alwaysRetainTaskState="true"

@@ -126,6 +126,7 @@ public class ReviewPopUp extends AppCompatActivity {
         b.putString("title", hikeTitle);
         backToHike.putExtras(b);
         startActivity(backToHike);
+        finish();
     }
 
 }
