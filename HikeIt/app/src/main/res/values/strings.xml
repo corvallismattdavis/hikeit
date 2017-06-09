@@ -21,6 +21,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="sign_out">SIGN OUT</string>
     <string name="desc">About:</string>
+    <string name="hintReview">Write Your Review Here</string>
 
 
     <!-- Strings related to login -->
