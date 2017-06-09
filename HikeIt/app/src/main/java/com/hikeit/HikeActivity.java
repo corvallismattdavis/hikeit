@@ -1,5 +1,6 @@
 package com.hikeit;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Rating;
 import android.os.Bundle;
@@ -51,10 +52,6 @@ public class HikeActivity extends AppCompatActivity {
 
         final String hike_title = getIntent().getExtras().getString("title");
 
-        loadImage();
-        SetImageGallery();
-
-
         //START FOR DATABASE STUFF
         allHikes = new ArrayList<HikeListItem>();
 
@@ -103,6 +100,8 @@ public class HikeActivity extends AppCompatActivity {
                 img.setImageBitmap(thisHike.picture);
                 des.setText(thisHike.description);
                 rating.setRating(thisHike.rating);
+
+                SetImageGallery();
             }
 
             @Override
@@ -160,30 +159,40 @@ public class HikeActivity extends AppCompatActivity {
         return hike;
     }
 
-    private void loadImage()
-    {
-        Bundle b = getIntent().getExtras();
-        String src = "empty";
-        if (b != null)
-        {
-            src = b.getString("src");
-        }
-
-        //new DownloadImageTask((ImageView) findViewById(R.id.hike_img)).execute(src);
-    }
+//    ImageView imageView = new ImageView(this);
+//            imageView.setId(i - 1);
+//            imageView.setPadding(3, 3, 3, 3);
+//
+//    int hikeImgResource = getId(thisHike.imgSrc.get(0) + i, R.drawable.class);
+//    BitmapFactory.Options opt = new BitmapFactory.Options();
+//    opt.inSampleSize = 2;
+//    Bitmap pic = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+//
+//            imageView.setImageBitmap(pic);
+//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//            layout.addView(imageView);
 
     private void SetImageGallery()
     {
-        LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
-        for (int i = 0; i < 10; i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setId(i);
-            imageView.setPadding(3, 3, 3, 3);
-            imageView.setImageBitmap(BitmapFactory.decodeResource(
-                    getResources(), R.drawable.bishops));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            layout.addView(imageView);
-        }
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inSampleSize = 2;
+        int hikeImgResource = 0;
+
+        ImageView image1 = (ImageView) findViewById(R.id.image1);
+        ImageView image2 = (ImageView) findViewById(R.id.image2);
+        ImageView image3 = (ImageView) findViewById(R.id.image3);
+
+        hikeImgResource = getId(thisHike.imgSrc.get(0) + "1", R.drawable.class);
+        Bitmap pic = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        image1.setImageBitmap(pic);
+
+        hikeImgResource = getId(thisHike.imgSrc.get(0) + "2", R.drawable.class);
+        Bitmap pic2 = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        image2.setImageBitmap(pic2);
+
+        hikeImgResource = getId(thisHike.imgSrc.get(0), R.drawable.class);
+        Bitmap pic3 = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        image3.setImageBitmap(pic3);
     }
 
     private void ReviewHike() {
