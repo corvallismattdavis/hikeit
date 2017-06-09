@@ -44,4 +44,5 @@
     <string name="hello_blank_search">Hello blank search</string>
     <string name="hello_blank_account">Hello blank account</string>
     <string name="title_activity_ass">ass</string>
+    <string name="title_activity_review_pop_up">ReviewPopUp</string>
 </resources>
