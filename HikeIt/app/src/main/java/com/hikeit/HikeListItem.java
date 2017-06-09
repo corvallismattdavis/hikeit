@@ -22,12 +22,14 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
     public float lat = 30;
     public float lg = -120;
     public long count = 1; //count represents the numOfRatings in the DB
+    public String description = "Not loaded..";
 
     public Bitmap picture;
 
-    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi, long cnt)
+    public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi, long cnt, String desc)
     {
         imgSrc = img;
+        description = desc;
         this.title = title;
         difficulty = diff;
         this.rating = rating;

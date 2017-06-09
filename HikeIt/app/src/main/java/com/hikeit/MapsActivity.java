@@ -102,7 +102,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     float lat = (float) ((double) jsonValue.get("lat"));
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
-                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings));
+                    String description = (String) jsonValue.get("des");
+                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description));
 
                 }
 

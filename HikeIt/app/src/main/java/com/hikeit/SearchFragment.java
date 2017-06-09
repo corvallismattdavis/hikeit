@@ -145,8 +145,9 @@ public class SearchFragment extends Fragment {
                     float lat = (float) ((double) jsonValue.get("lat"));
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
+                    String description = (String) jsonValue.get("des");
 
-                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
+                            HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
                     BitmapFactory.Options opt = new BitmapFactory.Options();
                     opt.inSampleSize = 2;

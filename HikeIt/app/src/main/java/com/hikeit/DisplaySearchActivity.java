@@ -79,6 +79,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
                     String difficulty = (String) jsonValue.get("difficulty");
+                    String description = (String) jsonValue.get("des");
                     ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
                     float distance = (float)((double)jsonValue.get("distance"));
                     float rating = (float)((double)jsonValue.get("rating"));
@@ -86,7 +87,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
 
-                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings));
+                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description));
                 }
 
                 //callIntent();

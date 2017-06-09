@@ -4,10 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_hike"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hikeit.HikeActivity"
     tools:showIn="@layout/activity_hike">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/inner_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="match_parent"
@@ -58,17 +67,31 @@
         android:rating="4.7"
         android:stepSize="0.1" />
 
+            <TextView
+                android:id="@+id/hike_desc_title"
+                style="?android:textAppearanceSmallInverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_marginTop="15dp"
+                android:alpha="100"
+                android:padding="6dp"
+                android:text="@string/desc"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"
+                android:typeface="normal" />
     <TextView
         android:id="@+id/hike_description"
         style="?android:textAppearanceSmallInverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar"
+        android:layout_below="@+id/hike_desc_title"
         android:alpha="100"
         android:padding="6dp"
         android:text="@string/hike_description"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:typeface="normal" />
 
     <TextView
@@ -82,7 +105,7 @@
         android:padding="6dp"
         android:text="@string/other_hikes"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="normal|bold"
         android:typeface="normal" />
 
@@ -92,10 +115,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="100"
-        android:padding="17dp"
+        android:padding="6dp"
         android:text="Reviews:"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="normal|bold"
         android:typeface="normal"
         android:layout_below="@+id/horizontal_scroll"
@@ -141,6 +164,6 @@
         android:layout_above="@+id/review_list"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="14dp" />
-
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

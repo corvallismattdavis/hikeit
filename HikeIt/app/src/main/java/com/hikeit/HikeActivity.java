@@ -1,6 +1,7 @@
 package com.hikeit;
 
 import android.graphics.BitmapFactory;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -73,12 +75,13 @@ public class HikeActivity extends AppCompatActivity {
                     float lat = (float) ((double) jsonValue.get("lat"));
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
+                    String description = (String) jsonValue.get("des");
 
-                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
+                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
 
                     BitmapFactory.Options opt = new BitmapFactory.Options();
-                    opt.inSampleSize = 4;
+                    opt.inSampleSize = 2;
 
                     hike.picture = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
 
@@ -92,8 +95,14 @@ public class HikeActivity extends AppCompatActivity {
                 thisHike = getHikeInfo();
 
                 TextView title = (TextView) findViewById(R.id.hike_title);
+                ImageView img = (ImageView) findViewById(R.id.hike_img);
+                TextView des = (TextView) findViewById(R.id.hike_description);
+                RatingBar rating = (RatingBar) findViewById(R.id.ratingBar);
 
                 title.setText(thisHike.title);
+                img.setImageBitmap(thisHike.picture);
+                des.setText(thisHike.description);
+                rating.setRating(thisHike.rating);
             }
 
             @Override
