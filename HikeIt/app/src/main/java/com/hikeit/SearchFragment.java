@@ -154,7 +154,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (TextUtils.isEmpty(newText)) {
-                    callSearch(newText);
+                    //callSearch(newText);
                 }
                 return true;
             }
@@ -177,10 +177,10 @@ public class SearchFragment extends Fragment {
 
                         private Integer getScore(String s) {
                             int bestMatch = 1000000;
-                            String[] tokens = s.substring(0, Math.min(s.length(), q.length())).toLowerCase().split("\\s");
+                            String[] tokens = s.toLowerCase().split("\\s");
                             for (int i = 0; i < tokens.length; i++)
                             {
-                                int comp = tokens[i].compareTo(q);
+                                int comp = tokens[i].substring(0, Math.min(tokens[i].length(), q.length())).compareTo(q);
                                 if (Math.abs(comp) < bestMatch)
                                 {
                                     bestMatch = Math.abs(comp);
