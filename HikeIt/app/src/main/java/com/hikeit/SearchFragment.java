@@ -177,7 +177,7 @@ public class SearchFragment extends Fragment {
 
                         private Integer getScore(String s) {
                             int bestMatch = 1000000;
-                            String[] tokens = s.toLowerCase().split("\\s");
+                            String[] tokens = s.substring(0, Math.min(s.length(), q.length())).toLowerCase().split("\\s");
                             for (int i = 0; i < tokens.length; i++)
                             {
                                 int comp = tokens[i].compareTo(q);
