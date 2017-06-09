@@ -27,6 +27,10 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
     private TextView mTextMessage;
     private Fragment curFragment;
 
+    Fragment mapsFrag = null;
+    Fragment searchFrag = null;
+    Fragment profFrag = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +44,35 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
                 findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.menu_favorites:
-                                selectedFragment = MapFragment.newInstance();
-                                break;
-                            case R.id.menu_search:
-                                selectedFragment = SearchFragment.newInstance();
-                                break;
-                            case R.id.menu_settings:
+                                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                                    @Override
+                                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                        Fragment selectedFragment = null;
+                                        switch (item.getItemId()) {
+                                            case R.id.menu_favorites:
+                                                if (mapsFrag == null) {
+                                                    selectedFragment = MapFragment.newInstance();
+                                                    mapsFrag = selectedFragment;
+                                                }
+                                                else
+                                                {
+                                                    selectedFragment = mapsFrag;
+                                                }
+                                                break;
+                                            case R.id.menu_search:
+                                                if (searchFrag == null) {
+                                                    selectedFragment = SearchFragment.newInstance();
+                                                    searchFrag = selectedFragment;
+                                                }
+                                                else
+                                                {
+                                                    selectedFragment = searchFrag;
+                                                }
+                                                break;
+                                            case R.id.menu_settings:
+//                                                if (profFrag ==null) {
+//
+//                                                }
                                 FirebaseAuth auth = FirebaseAuth.getInstance();
                                 if (auth.getCurrentUser() != null)
                                 {
@@ -70,13 +91,23 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, SearchFragment.newInstance());
-        transaction.commit();
+        int defaultFrag = getIntent().getExtras().getInt("frag");
+        if (defaultFrag == 1)
+        {
+            //Manually displaying the first fragment - one time only
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, MapFragment.newInstance());
+            transaction.commit();
+        }
+        else {
+            //Manually displaying the first fragment - one time only
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, SearchFragment.newInstance());
+            transaction.commit();
+        }
 
         //Used to select an item programmatically
-        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+        bottomNavigationView.getMenu().getItem(defaultFrag - 1).setChecked(true);
     }
 
 

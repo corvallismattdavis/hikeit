@@ -133,13 +133,14 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:clickable="true"
         app:fabSize="mini"
         app:backgroundTint="@color/white"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_marginStart="82dp"
         android:layout_above="@+id/review_list"
-        android:layout_alignStart="@+id/ratingBar" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp" />
 
 
 </RelativeLayout>

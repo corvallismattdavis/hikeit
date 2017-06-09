@@ -148,7 +148,10 @@ public class SearchFragment extends Fragment {
 
                     HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
-                    hike.picture = BitmapFactory.decodeResource(getActivity().getResources(), hikeImgResource);
+                    BitmapFactory.Options opt = new BitmapFactory.Options();
+                    opt.inSampleSize = 2;
+
+                    hike.picture = BitmapFactory.decodeResource(getContext().getResources(), hikeImgResource, opt);
 
                     allHikes.add(hike);
                     Log.d("DB LOAD", "loaded... " + Integer.toString(allHikes.size()));
@@ -182,6 +185,8 @@ public class SearchFragment extends Fragment {
                 if (query.contains("near") || query.contains("me"))
                 {
                     Collections.sort(allHikes, HikeListItem.COMPARE_BY_CLOSE_TO_ME);
+                    HikeListAdapter adapter = new HikeListAdapter(getActivity(), R.layout.list_row, allHikes);
+                    hikeList.setAdapter(adapter);
                 }
                 else
                 {
@@ -209,6 +214,8 @@ public class SearchFragment extends Fragment {
                         }
                     };
                     Collections.sort(allHikes, COMPARE_STRING);
+                    HikeListAdapter adapter = new HikeListAdapter(getActivity(), R.layout.list_row, allHikes);
+                    hikeList.setAdapter(adapter);
                 }
 
                 HikeListAdapter adapter = new HikeListAdapter(getActivity(), R.layout.list_row, allHikes);
@@ -225,11 +232,15 @@ public class SearchFragment extends Fragment {
                 ListView listView = (ListView) view.getParent();
                 if (listView != null) {
 
-                    HikeListItem hike = allHikes.get(position);
+                    HikeListItem hike = (HikeListItem)listView.getItemAtPosition(position);
                     if (hike != null) {
                             Intent startNewHikeActivity = new Intent(getActivity(), HikeActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("title", allHikes.get(position).title);
+
+                            //Log.d("postion", Integer.toString(position));
+
+                            b.putString("title", hike.title);
+                            //b.putFloat("");
 //                            b.putString("difficulty", allHikes.get(position).difficulty.toString());
 //                            b.putFloat("rating", allHikes.get(position).rating);
 //                            b.putFloat("distance", allHikes.get(position).distance);

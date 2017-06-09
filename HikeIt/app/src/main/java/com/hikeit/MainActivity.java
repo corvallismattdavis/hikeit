@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     //Begin Button Edit Methods
     public void goToSearch (View view) {
         Intent mainMenu = new Intent(this, BottomNavBarActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("frag", 2);
+        mainMenu.putExtras(b);
+
         startActivity(mainMenu);
     }
 
@@ -63,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToMaps (View view) {
-        Intent maps = new Intent(this, MapsActivity.class);
+        Intent maps = new Intent(this, BottomNavBarActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("frag", 1);
+        maps.putExtras(b);
         startActivity(maps);
     }
 

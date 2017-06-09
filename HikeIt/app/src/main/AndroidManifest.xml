@@ -21,8 +21,10 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launch_icon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -37,15 +39,14 @@
         </activity>
         <activity
             android:name=".HikeActivity"
-            android:alwaysRetainTaskState="true"
             android:label="@string/title_activity_hike"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BottomNavBarActivity"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_hike"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".DisplaySearchActivity"
             android:alwaysRetainTaskState="true"
@@ -81,7 +82,7 @@
         <activity
             android:name=".AccountLoggedInActivity"
             android:label="@string/title_activity_account_logged_in"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.hikeit;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +47,8 @@ public class HikeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
 
+        final String hike_title = getIntent().getExtras().getString("title");
+
         loadImage();
         SetImageGallery();
 
@@ -61,6 +62,10 @@ public class HikeActivity extends AppCompatActivity {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
+                    if (!hike_title.equals(title))
+                    {
+                        continue;
+                    }
                     String difficulty = (String) jsonValue.get("difficulty");
                     ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
                     float distance = (float)((double)jsonValue.get("distance"));
@@ -71,7 +76,11 @@ public class HikeActivity extends AppCompatActivity {
 
                     HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
-                    hike.picture = BitmapFactory.decodeResource(getResources(), hikeImgResource);
+
+                    BitmapFactory.Options opt = new BitmapFactory.Options();
+                    opt.inSampleSize = 4;
+
+                    hike.picture = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
 
                     allHikes.add(hike);
                 }
@@ -81,6 +90,7 @@ public class HikeActivity extends AppCompatActivity {
             public void initHikeActivity()
             {
                 thisHike = getHikeInfo();
+
                 TextView title = (TextView) findViewById(R.id.hike_title);
 
                 title.setText(thisHike.title);
@@ -92,6 +102,14 @@ public class HikeActivity extends AppCompatActivity {
             }
         });
 
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("adf", "ass");
+            }
+        });
 
     }
 
@@ -108,8 +126,10 @@ public class HikeActivity extends AppCompatActivity {
 
     //get information from bundle from the previous activity
     public HikeListItem getHikeInfo() {
-        Bundle b2 = new Bundle();
+        Bundle b2 = getIntent().getExtras();
         String hikeTitle = b2.getString("title");
+
+        Log.d("Fdaf", hikeTitle);
 
         return getHikeFromTitle(hikeTitle);
     }
@@ -117,9 +137,10 @@ public class HikeActivity extends AppCompatActivity {
     public HikeListItem getHikeFromTitle(String title)
     {
         HikeListItem hike = null;
-
+        Log.d("lkey", title + " " + Integer.toString(allHikes.size()));
         for (HikeListItem h : allHikes)
         {
+            Log.d("GOT HIKE", h.title);
             if (h.title.equals(title))
             {
                 Log.d("GOT HIKE", h.title);

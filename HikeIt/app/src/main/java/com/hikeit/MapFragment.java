@@ -2,6 +2,7 @@ package com.hikeit;
 
 import android.*;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -38,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -87,8 +90,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+//        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+//                .findFragmentById(R.id.map_fragment);
+
+        MapView mapFrag = (MapView) v.findViewById(R.id.map_fragment);
+        mapFrag.onCreate(savedInstanceState);
+        mapFrag.onResume();
+
+        mapFrag.getMapAsync(this);
+
+        return v;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String string) {
@@ -143,10 +160,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     public void onStart() {
         super.onStart();
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map_fragment);
-//        mapFragment.getMapAsync(this);
+
     }
 
     @Override
@@ -176,6 +190,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 initMap();
             }
 
+
+
             //Add waypoints to map based on database information
             public void initMap() {
                 for (int i = 0; i < allHikes.size(); i++) {
@@ -189,7 +205,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                             .title(allHikes.get(i).title)
                             .snippet("Distance: " + allHikes.get(i).distance + " miles"));
                 }
+
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(getActivity(),HikeActivity.class);
+
+
+                        Bundle b = new Bundle();
+                        b.putString("title", marker.getTitle());
+
+                        intent.putExtras(b);
+                        startActivity(intent);
+
+                    }
+                });
             }
+
+
 //
 //            public void initAdapter()
 //            {
@@ -202,6 +235,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
             }
         });
+
+
 
 
 
