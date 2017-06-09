@@ -102,7 +102,10 @@ class HikeListAdapter extends ArrayAdapter<HikeListItem> {
             hikeDifficulty.setText(hike.difficulty.toString());
             hikeLength.setText(hike.distance + " miles");
             hikeRating.setRating(hike.rating);
-            hikeImage.setImageBitmap(hike.picture);
+
+            BitmapFactory.Options opt = new BitmapFactory.Options();
+            opt.inSampleSize = 2;
+            hikeImage.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), hike.imgResource, opt));
         }
 
         return itemView;

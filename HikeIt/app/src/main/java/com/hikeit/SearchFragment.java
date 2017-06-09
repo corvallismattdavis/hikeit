@@ -112,30 +112,10 @@ public class SearchFragment extends Fragment {
 
         childHikeRef = rootRef.child("hikes");
 
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    System.out.println("connected");
-                } else {
-                    System.out.println("not connected");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
-
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("DB LOAD", "loading initiated...");
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    Log.d("DB LOAD", "in the loop...");
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
                     String difficulty = (String) jsonValue.get("difficulty");
@@ -146,16 +126,12 @@ public class SearchFragment extends Fragment {
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
                     String description = (String) jsonValue.get("des");
-
-                            HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description);
+                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
-                    BitmapFactory.Options opt = new BitmapFactory.Options();
-                    opt.inSampleSize = 2;
 
-                    hike.picture = BitmapFactory.decodeResource(getContext().getResources(), hikeImgResource, opt);
+                    hike.imgResource = hikeImgResource;
 
                     allHikes.add(hike);
-                    Log.d("DB LOAD", "loaded... " + Integer.toString(allHikes.size()));
                 }
             }
             @Override

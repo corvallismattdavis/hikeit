@@ -172,7 +172,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("LOGIN", "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -233,7 +232,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             Toast.makeText(LoginActivity.this, "Email already in use.", Toast.LENGTH_LONG).show();
                             Log.e("LoginActivity", "Failed Registration", task.getException());
                         } else {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }
                     }
@@ -331,7 +329,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if (!task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Login failed! Invalid email or password,\nPlease try again.", Toast.LENGTH_LONG).show();
                             } else {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }
                         }
