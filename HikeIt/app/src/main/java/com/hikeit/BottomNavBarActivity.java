@@ -70,19 +70,23 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
                                                 }
                                                 break;
                                             case R.id.menu_settings:
-//                                                if (profFrag ==null) {
-//
-//                                                }
-                                FirebaseAuth auth = FirebaseAuth.getInstance();
-                                if (auth.getCurrentUser() != null)
-                                {
-                                    selectedFragment = AccountLoggedInFragment.newInstance();
-                                }
-                                else
-                                {
-                                    selectedFragment = LoginFragment.newInstance();
-                                }
-                                break;
+                                                FirebaseAuth auth = FirebaseAuth.getInstance();
+                                                if (auth.getCurrentUser() != null)
+                                                {
+                                                    selectedFragment = AccountLoggedInFragment.newInstance();
+                                                }
+                                                else
+                                                {
+                                                    if (profFrag == null) {
+                                                        selectedFragment = LoginFragment.newInstance();
+                                                        profFrag = selectedFragment;
+                                                    }
+                                                    else
+                                                    {
+                                                        selectedFragment = profFrag;
+                                                    }
+                                                }
+                                                break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
