@@ -149,6 +149,7 @@ public class HikeActivity extends AppCompatActivity {
 
             public void initHikeActivity()
             {
+                displayReviews();
                 thisHike = getHikeInfo();
 
                 TextView title = (TextView) findViewById(R.id.hike_title);
@@ -271,8 +272,6 @@ public class HikeActivity extends AppCompatActivity {
             //finish();
         }
 
-        displayReviews();
-
     }
 
     private void displayReviews()
@@ -282,6 +281,11 @@ public class HikeActivity extends AppCompatActivity {
             Log.d("REVIEWS", "No reviews for this hike.");
         }
         HashSet<String> users = new HashSet<String>();
+        ListView reviewList = (ListView) findViewById(R.id.review_list);
+        ReviewAdapter adapter = new ReviewAdapter(this, R.layout.list_reviews, reviews);
+        reviewList.setAdapter(adapter);
+
+
         for (Review r : reviews) {
             if (users.contains(r.user))
             {

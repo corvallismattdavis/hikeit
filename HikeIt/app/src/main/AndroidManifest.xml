@@ -46,7 +46,6 @@
             android:name=".HikeActivity"
             android:label="@string/title_activity_hike"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".DisplaySearchActivity"
             android:alwaysRetainTaskState="true"
@@ -86,7 +85,7 @@
         <activity
             android:name=".ReviewPopUp"
             android:label="@string/title_activity_review_pop_up"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
