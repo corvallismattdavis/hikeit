@@ -31,7 +31,7 @@
     <ImageView
         android:id="@+id/hike_gradient"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/hike_img"
         android:layout_gravity="top|center_vertical"
@@ -116,6 +116,7 @@
         android:layout_height="wrap_content"
         android:alpha="100"
         android:padding="6dp"
+        android:layout_marginTop="15dp"
         android:text="Reviews:"
         android:textColor="@android:color/black"
         android:textSize="16sp"
@@ -175,14 +176,15 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:clickable="true"
         app:fabSize="mini"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/green"
+        android:tint="@color/white"
         app:srcCompat="@android:drawable/ic_input_add"
         android:layout_above="@+id/review_list"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp" />
+        android:layout_marginEnd="14dp"
+        android:elevation="4dp"/>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

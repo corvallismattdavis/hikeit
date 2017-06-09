@@ -26,10 +26,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 import static android.R.attr.data;
@@ -41,6 +49,9 @@ public class HikeActivity extends AppCompatActivity {
     private DatabaseReference rootRef = fbDatabase.getReference();
     private DatabaseReference childHikeRef = rootRef.child("hikes");
     private ArrayList<HikeListItem> allHikes = new ArrayList<HikeListItem>();
+    private ArrayList<Review> reviews = new ArrayList<Review>();
+
+    HashMap<String, Integer> dbIndices = new HashMap<String, Integer>();
 
     private HikeListItem thisHike;
 
@@ -49,6 +60,18 @@ public class HikeActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
+
+        dbIndices.put("bishop", 0);
+        dbIndices.put("valencia", 1);
+        dbIndices.put("madonna", 2);
+        dbIndices.put("cerrocabrillo", 3);
+        dbIndices.put("oatspeak", 4);
+        dbIndices.put("reservoircanyon", 5);
+        dbIndices.put("thep", 6);
+        dbIndices.put("westcuestaridge", 7);
+        dbIndices.put("johnsonranch", 8);
+        dbIndices.put("terracehills", 9);
+        dbIndices.put("irishhills", 10);
 
         final String hike_title = getIntent().getExtras().getString("title");
 
@@ -73,8 +96,33 @@ public class HikeActivity extends AppCompatActivity {
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
                     String description = (String) jsonValue.get("des");
+                    try {
+                        ArrayList<HashMap<String, Object>> revs = (ArrayList<HashMap<String, Object>>) jsonValue.get("reviews");
 
-                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings, description);
+                        for (HashMap<String, Object> obj : revs) {
+                            String date = (String) obj.get("date");
+                            long rate = ((Number) obj.get("rating")).longValue();
+                            String user = (String) obj.get("user");
+                            String review = (String) obj.get("review");
+                            Review rev = new Review(date, rate, user, review);
+                            reviews.add(rev);
+                        }
+                    }
+                    catch (ClassCastException cce)
+                    {
+                        Log.d("WOOPS", "when adding a review");
+                    }
+
+                    HikeListItem hike = new HikeListItem(imgSrc,
+                            title,
+                            HikeListItem.Difficulty.valueOf(difficulty),
+                            rating,
+                            distance,
+                            lat,
+                            lg,
+                            numRatings,
+                            description,
+                            reviews);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
 
                     BitmapFactory.Options opt = new BitmapFactory.Options();
@@ -115,7 +163,7 @@ public class HikeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("adf", "ass");
+                ReviewHike();
             }
         });
 
@@ -174,8 +222,6 @@ public class HikeActivity extends AppCompatActivity {
 
     private void SetImageGallery()
     {
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inSampleSize = 2;
         int hikeImgResource = 0;
 
         ImageView image1 = (ImageView) findViewById(R.id.image1);
@@ -183,15 +229,15 @@ public class HikeActivity extends AppCompatActivity {
         ImageView image3 = (ImageView) findViewById(R.id.image3);
 
         hikeImgResource = getId(thisHike.imgSrc.get(0) + "1", R.drawable.class);
-        Bitmap pic = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        Bitmap pic = BitmapFactory.decodeResource(getResources(), hikeImgResource);
         image1.setImageBitmap(pic);
 
         hikeImgResource = getId(thisHike.imgSrc.get(0) + "2", R.drawable.class);
-        Bitmap pic2 = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        Bitmap pic2 = BitmapFactory.decodeResource(getResources(), hikeImgResource);
         image2.setImageBitmap(pic2);
 
         hikeImgResource = getId(thisHike.imgSrc.get(0), R.drawable.class);
-        Bitmap pic3 = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+        Bitmap pic3 = BitmapFactory.decodeResource(getResources(), hikeImgResource);
         image3.setImageBitmap(pic3);
     }
 
@@ -207,6 +253,39 @@ public class HikeActivity extends AppCompatActivity {
             //display the reviews in a separate section
             //
 
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("hikes/" +
+                                                        Integer.toString(dbIndices.get(thisHike.imgSrc.get(0))) +
+                                                        "/reviews");
+        Review rev = new Review("6/7/17", 3, "test3@gmail.com", "This hike was pretty decent.");
+        reviews.add(rev);
+        ArrayList<Review> revList = new ArrayList<Review>();
+        revList.add(rev);
+        myRef.setValue(reviews);
+
+        displayReviews();
+
+    }
+
+    private void displayReviews()
+    {
+        if (reviews.size() == 0)
+        {
+            Log.d("REVIEWS", "No reviews for this hike.");
+        }
+        HashSet<String> users = new HashSet<String>();
+        for (Review r : reviews) {
+            if (users.contains(r.user))
+            {
+                reviews.remove(r);
+            }
+            else
+            {
+                Log.d("REVIEW", r.toString());
+                users.add(r.user);
+            }
+        }
     }
 
 }
