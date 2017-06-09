@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,6 +80,15 @@ public class HikeActivity extends AppCompatActivity {
 
         //START FOR DATABASE STUFF
         allHikes = new ArrayList<HikeListItem>();
+
+        ListView reviewList = (ListView) findViewById(R.id.review_list);
+        reviewList.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -268,34 +278,32 @@ public class HikeActivity extends AppCompatActivity {
             b.putString("hike", thisHike.title);
             review.putExtras(b);
             startActivity(review);
+            displayReviews();
             //finish();
         }
 
     }
 
-    private void displayReviews()
-    {
-        if (reviews.size() == 0)
-        {
+    private void displayReviews() {
+        if (reviews.size() == 0) {
             Log.d("REVIEWS", "No reviews for this hike.");
         }
         HashSet<String> users = new HashSet<String>();
-        ListView reviewList = (ListView) findViewById(R.id.review_list);
-        ReviewAdapter adapter = new ReviewAdapter(this, R.layout.list_reviews, reviews);
-        reviewList.setAdapter(adapter);
-
-
+        ArrayList<Review> uniqueReviewers = new ArrayList<Review>();
         for (Review r : reviews) {
-            if (users.contains(r.user))
-            {
-                reviews.remove(r);
-            }
-            else
-            {
+            if (users.contains(r.user)) {
+
+            } else {
                 Log.d("REVIEW", r.toString());
                 users.add(r.user);
+                uniqueReviewers.add(r);
             }
         }
+
+        ListView reviewList = (ListView) findViewById(R.id.review_list);
+        ReviewAdapter adapter = new ReviewAdapter(this, R.layout.list_reviews, uniqueReviewers);
+        reviewList.setAdapter(adapter);
+
     }
 
 }

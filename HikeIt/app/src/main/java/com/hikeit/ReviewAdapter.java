@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ class ReviewAdapter extends ArrayAdapter<Review> {
     final List<Review> reviews;
     private int itemResource;
     private StorageReference pictureDatabase = FirebaseStorage.getInstance().getReference();
+    HashSet<String> users = new HashSet<String>();
 
     public ReviewAdapter(Context context, int itemResource, List<Review> data) {
         super(context, R.layout.list_row, data);
@@ -92,15 +94,19 @@ class ReviewAdapter extends ArrayAdapter<Review> {
         Review rev = this.reviews.get(position);
         if (rev != null)
         {
-            TextView reviewUser = (TextView) itemView.findViewById(R.id.list_row_username);
-            TextView reviewDate = (TextView) itemView.findViewById(R.id.list_row_date);
-            TextView reviewReview = (TextView) itemView.findViewById(R.id.list_row_title);
-            RatingBar reviewRating = (RatingBar) itemView.findViewById(R.id.list_row_rating);
+            if (!users.contains(rev.user))
+            {
+                TextView reviewUser = (TextView) itemView.findViewById(R.id.list_row_username);
+                TextView reviewDate = (TextView) itemView.findViewById(R.id.list_row_date);
+                TextView reviewReview = (TextView) itemView.findViewById(R.id.list_row_title);
+                RatingBar reviewRating = (RatingBar) itemView.findViewById(R.id.list_row_rating);
 
-            reviewUser.setText(rev.user);
-            reviewDate.setText(rev.date);
-            reviewReview.setText(rev.review);
-            reviewRating.setRating(rev.rating);
+                reviewUser.setText(rev.user);
+                reviewDate.setText(rev.date);
+                reviewReview.setText(rev.review);
+                reviewRating.setRating(rev.rating);
+                users.add(rev.user);
+            }
         }
 
         return itemView;

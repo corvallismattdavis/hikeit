@@ -7,16 +7,19 @@
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hikeit.HikeActivity"
-    tools:showIn="@layout/activity_hike">
+    tools:showIn="@layout/activity_hike"
+    android:focusableInTouchMode="true">
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/inner_rel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
     <ImageView
         android:layout_width="match_parent"
@@ -127,8 +130,8 @@
 
     <ListView
         android:id="@+id/review_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_marginTop="5dp"
         android:layout_below ="@+id/reviewHeader"
         android:background="@android:color/transparent"

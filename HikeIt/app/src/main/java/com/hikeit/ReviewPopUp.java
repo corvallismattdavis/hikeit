@@ -33,6 +33,8 @@ public class ReviewPopUp extends AppCompatActivity {
     HashMap<String, Integer> dbIndices = new HashMap<String, Integer>();
     String hikeTitle = "bishops";
     String hike = "Bishop Peak";
+    int numReviews = 0;
+    float curRating = 0.0f;
 
     private FirebaseDatabase fbDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference rootRef = fbDatabase.getReference();
@@ -68,6 +70,9 @@ public class ReviewPopUp extends AppCompatActivity {
                     {
                         continue;
                     }
+
+                    curRating = (float)((double)jsonValue.get("rating"));
+                    numReviews = ((Long) jsonValue.get("numRatings")).intValue();
                     try {
                         ArrayList<HashMap<String, Object>> revs = (ArrayList<HashMap<String, Object>>) jsonValue.get("reviews");
 
@@ -118,10 +123,40 @@ public class ReviewPopUp extends AppCompatActivity {
                 Math.round(ratingBar.getRating()),
                 auth.getCurrentUser().getEmail(),
                 review.getText().toString());
-        reviews.add(rev);
-        ArrayList<Review> revList = new ArrayList<Review>();
-        revList.add(rev);
-        myRef.setValue(reviews);
+
+        Boolean alreadyReviewed = false;
+
+        for (Review r : reviews)
+        {
+            if (r.user.equals(auth.getCurrentUser().getEmail()))
+            {
+                alreadyReviewed = true;
+            }
+        }
+
+        if (!alreadyReviewed) {
+
+            Log.d("NUMREVIEWS", Integer.toString(numReviews));
+            Log.d("CURRATING", Float.toString(curRating));
+            curRating = (Math.round(ratingBar.getRating()) + (curRating * numReviews)) / (numReviews + 1);
+            numReviews++;
+
+            reviews.add(rev);
+            ArrayList<Review> revList = new ArrayList<Review>();
+            revList.add(rev);
+            myRef.setValue(reviews);
+
+            DatabaseReference numberOfReviews = database.getReference("hikes/" +
+                    Integer.toString(dbIndices.get(hikeTitle)) +
+                    "/numRatings");
+            numberOfReviews.setValue(numReviews);
+
+            DatabaseReference curRat = database.getReference("hikes/" +
+                    Integer.toString(dbIndices.get(hikeTitle)) +
+                    "/rating");
+            curRat.setValue(curRating);
+        }
+
 
 //        Intent backToHike = new Intent(this, HikeActivity.class);
 //        Bundle b = new Bundle();
