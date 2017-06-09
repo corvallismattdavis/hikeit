@@ -127,10 +127,7 @@ public class HikeActivity extends AppCompatActivity {
                             reviews);
                     int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
 
-                    BitmapFactory.Options opt = new BitmapFactory.Options();
-                    opt.inSampleSize = 2;
-
-                    hike.picture = BitmapFactory.decodeResource(getResources(), hikeImgResource, opt);
+                    hike.imgResource = hikeImgResource;
 
                     allHikes.add(hike);
                 }
@@ -147,7 +144,9 @@ public class HikeActivity extends AppCompatActivity {
                 RatingBar rating = (RatingBar) findViewById(R.id.ratingBar);
 
                 title.setText(thisHike.title);
-                img.setImageBitmap(thisHike.picture);
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inSampleSize = 4;
+                img.setImageBitmap(BitmapFactory.decodeResource(getResources(), thisHike.imgResource, opt));
                 des.setText(thisHike.description);
                 rating.setRating(thisHike.rating);
 

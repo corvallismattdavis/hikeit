@@ -25,7 +25,7 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
     public String description = "Not loaded..";
     public ArrayList<Review> reviews;
 
-    public Bitmap picture;
+    public int imgResource;
 
     public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi, long cnt, String desc)
     {
