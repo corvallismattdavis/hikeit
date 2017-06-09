@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:foreground="?attr/selectableItemBackground"
     android:layout_height="120dp"
-    android:descendantFocusability="blocksDescendants"
-    android:onClick="getHike">
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"

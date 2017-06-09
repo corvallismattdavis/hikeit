@@ -121,7 +121,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
             public void callSearch(String query) {
                 Collections.shuffle(allHikes);
-                HikeListAdapter adapter = new HikeListAdapter(curContext, allHikes.toArray(new HikeListItem[0]));
+                HikeListAdapter adapter = new HikeListAdapter(curContext, R.layout.list_row, allHikes);
                 hikeList.setAdapter(adapter);
             }
 

@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,10 +40,11 @@ public class HikeActivity extends AppCompatActivity {
     private DatabaseReference childHikeRef = rootRef.child("hikes");
     private ArrayList<HikeListItem> allHikes = new ArrayList<HikeListItem>();
 
-
+    private HikeListItem thisHike;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
 
@@ -49,49 +53,81 @@ public class HikeActivity extends AppCompatActivity {
 
 
         //START FOR DATABASE STUFF
-            allHikes = new ArrayList<HikeListItem>();
+        allHikes = new ArrayList<HikeListItem>();
 
-            childHikeRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                        HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
-                        String title = (String) jsonValue.get("title");
-                        String difficulty = (String) jsonValue.get("difficulty");
-                        ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
-                        float distance = (float)((double)jsonValue.get("distance"));
-                        float rating = (float)((double)jsonValue.get("rating"));
-                        float lat = (float) ((double) jsonValue.get("lat"));
-                        float lg = (float) ((double) jsonValue.get("lg"));
-                        long numRatings = (long) jsonValue.get("numRatings");
-                        allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings));
-                    }
+        childHikeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
+                    String title = (String) jsonValue.get("title");
+                    String difficulty = (String) jsonValue.get("difficulty");
+                    ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
+                    float distance = (float)((double)jsonValue.get("distance"));
+                    float rating = (float)((double)jsonValue.get("rating"));
+                    float lat = (float) ((double) jsonValue.get("lat"));
+                    float lg = (float) ((double) jsonValue.get("lg"));
+                    long numRatings = (long) jsonValue.get("numRatings");
 
-                    initHikeActivity();
+                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
+                    int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
+                    hike.picture = BitmapFactory.decodeResource(getResources(), hikeImgResource);
+
+                    allHikes.add(hike);
                 }
+                initHikeActivity();
+            }
 
-                public void initHikeActivity() {
+            public void initHikeActivity()
+            {
+                thisHike = getHikeInfo();
+                TextView title = (TextView) findViewById(R.id.hike_title);
 
-                    getHikeInfo();
-//                    for (int i = 0; i < allHikes.size(); i++) {
-//
-////                        float latLoop = allHikes.get(i).lat;
-////                        float longLoop = allHikes.get(i).lg;
-//
-//                    }
-                }
+                title.setText(thisHike.title);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+            }
+        });
+
+
+    }
+
+    public static int getId(String resourceName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + c, e);
         }
+    }
+
 
     //get information from bundle from the previous activity
-    public void getHikeInfo() {
+    public HikeListItem getHikeInfo() {
         Bundle b2 = new Bundle();
-        b2.getString("src",  allHikes.get(0).title);
+        String hikeTitle = b2.getString("title");
+
+        return getHikeFromTitle(hikeTitle);
+    }
+
+    public HikeListItem getHikeFromTitle(String title)
+    {
+        HikeListItem hike = null;
+
+        for (HikeListItem h : allHikes)
+        {
+            if (h.title.equals(title))
+            {
+                Log.d("GOT HIKE", h.title);
+                hike = h;
+            }
+        }
+
+        return hike;
     }
 
     private void loadImage()

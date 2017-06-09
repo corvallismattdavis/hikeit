@@ -1,5 +1,6 @@
 package com.hikeit;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -21,6 +22,8 @@ public class HikeListItem implements Parcelable, Comparable<HikeListItem> {
     public float lat = 30;
     public float lg = -120;
     public long count = 1; //count represents the numOfRatings in the DB
+
+    public Bitmap picture;
 
     public HikeListItem(ArrayList<String> img, String title, Difficulty diff, float rating, float dist, float lati, float lgi, long cnt)
     {

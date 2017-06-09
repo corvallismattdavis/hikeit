@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -28,33 +29,33 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by Jon on 4/12/2017.
  */
-class HikeListAdapter extends BaseAdapter {
+class HikeListAdapter extends ArrayAdapter<HikeListItem> {
 
     Context context;
-    HikeListItem[] data;
-    private static LayoutInflater inflater = null;
+    final List<HikeListItem> hikes;
+    private int itemResource;
     private StorageReference pictureDatabase = FirebaseStorage.getInstance().getReference();
 
-    public HikeListAdapter(Context context, HikeListItem[] data) {
-        // TODO Auto-generated constructor stub
+    public HikeListAdapter(Context context, int itemResource, List<HikeListItem> data) {
+        super(context, R.layout.list_row, data);
         this.context = context;
-        this.data = data;
-        inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.hikes = data;
+        this.itemResource = itemResource;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return hikes.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return data[position];
+    public HikeListItem getItem(int position) {
+        return hikes.get(position);
     }
 
     @Override
@@ -76,42 +77,34 @@ class HikeListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        View itemView;
 
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.list_row, parent, false);
-
-            holder.title = (TextView) convertView.findViewById(R.id.list_row_title);
-            holder.difficulty  = (TextView) convertView.findViewById(R.id.list_row_difficulty);
-            holder.distance = (TextView) convertView.findViewById(R.id.list_row_length);
-            holder.icon = (ImageView) convertView.findViewById(R.id.list_row_img);
-            holder.rating = (RatingBar) convertView.findViewById(R.id.list_row_rating);
-
-            convertView.setTag(holder);
+        if (convertView != null)
+        {
+            itemView = convertView;
         }
         else
         {
-            holder = (ViewHolder) convertView.getTag();
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            itemView = inflater.inflate(this.itemResource, parent, false);
         }
 
-        HikeListItem hike = data[position];
-        holder.title.setText(hike.title);
-        holder.difficulty.setText(hike.difficulty.toString());
-        holder.distance.setText(hike.distance + " miles");
-        holder.rating.setRating(hike.rating);
+        HikeListItem hike = this.hikes.get(position);
+        if (hike != null)
+        {
+            TextView hikeTitle = (TextView) itemView.findViewById(R.id.list_row_title);
+            TextView hikeDifficulty = (TextView) itemView.findViewById(R.id.list_row_difficulty);
+            TextView hikeLength = (TextView) itemView.findViewById(R.id.list_row_length);
+            RatingBar hikeRating = (RatingBar) itemView.findViewById(R.id.list_row_rating);
+            ImageView hikeImage = (ImageView) itemView.findViewById(R.id.list_row_img);
 
-        int id = context.getResources().getIdentifier("drawable/" + data[position].imgSrc.get(0), null, context.getPackageName());
-        holder.icon.setImageResource(id);
+            hikeTitle.setText(hike.title);
+            hikeDifficulty.setText(hike.difficulty.toString());
+            hikeLength.setText(hike.distance + " miles");
+            hikeRating.setRating(hike.rating);
+            hikeImage.setImageBitmap(hike.picture);
+        }
 
-        return convertView;
-    }
-
-    private class ViewHolder {
-        TextView title;
-        TextView difficulty;
-        TextView distance;
-        ImageView icon;
-        RatingBar rating;
+        return itemView;
     }
 }

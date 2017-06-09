@@ -95,19 +95,6 @@ public class BottomNavBarActivity extends AppCompatActivity implements SearchFra
         Log.d("LOG","hello " + allHikes.get(0).title);
     }
 
-    public void getHike(View view)
-    {
-        Intent startNewHikeActivity = new Intent(this, HikeActivity.class);
-//        Bundle b = new Bundle();
-//        b.putString("src", allHikes.get(0).imgSrc.get(0));
-//
-
-        //get allHikes info from SearchFragment.java to send to HikeActivity.java
-
-//        startNewHikeActivity.putExtras(b);
-        startActivity(startNewHikeActivity);
-    }
-
     public void signoutClicked (View view) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();

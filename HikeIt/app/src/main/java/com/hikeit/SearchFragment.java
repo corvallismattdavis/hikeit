@@ -3,6 +3,7 @@ package com.hikeit;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -24,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +48,7 @@ public class SearchFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FirebaseDatabase fbDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference rootRef = fbDatabase.getReference();
-    private DatabaseReference childHikeRef = rootRef.child("hikes");
+    private DatabaseReference childHikeRef;
 
     private ArrayList<HikeListItem> allHikes = new ArrayList<HikeListItem>();
     private ListAdapter adapter;
@@ -65,7 +68,8 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 
@@ -73,20 +77,9 @@ public class SearchFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
+
+        Log.d("START", "started");
         Init();
-    }
-
-
-    public void getHike(View view)
-    {
-        Intent startNewHikeActivity = new Intent(getActivity(), HikeActivity.class);
-        Bundle b = new Bundle();
-        b.putString("src", allHikes.get(0).imgSrc.get(0));
-
-        startNewHikeActivity.putExtras(b);
-        startActivity(startNewHikeActivity);
-
-        //hikeList.setOnClickListener(new OnItemClickListener())
     }
 
     @Override
@@ -96,21 +89,53 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+    public static int getId(String resourceName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + c, e);
+        }
+    }
+
     public void Init()
     {
+        Log.d("INIT", "called");
         allHikes = new ArrayList<HikeListItem>();
 
         final SearchView searchView = (SearchView) getView().findViewById(R.id.search);
         final ListView hikeList = (ListView) getView().findViewById(R.id.hike_list);
 
-
         searchView.setIconified(false);
         searchView.clearFocus();
+
+        childHikeRef = rootRef.child("hikes");
+
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    System.out.println("connected");
+                } else {
+                    System.out.println("not connected");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
 
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("DB LOAD", "loading initiated...");
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    Log.d("DB LOAD", "in the loop...");
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
                     String difficulty = (String) jsonValue.get("difficulty");
@@ -121,20 +146,17 @@ public class SearchFragment extends Fragment {
                     float lg = (float) ((double) jsonValue.get("lg"));
                     long numRatings = (long) jsonValue.get("numRatings");
 
-                    allHikes.add(new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings));
+                    HikeListItem hike = new HikeListItem(imgSrc, title, HikeListItem.Difficulty.valueOf(difficulty), rating, distance, lat, lg, numRatings);
+                    int hikeImgResource = getId(hike.imgSrc.get(0), R.drawable.class);
+                    hike.picture = BitmapFactory.decodeResource(getActivity().getResources(), hikeImgResource);
+
+                    allHikes.add(hike);
+                    Log.d("DB LOAD", "loaded... " + Integer.toString(allHikes.size()));
                 }
-
-                //initAllHikes();
             }
-
-//            public void initAllHikes()
-//            {
-//                passData(allHikes.get(0).title);
-//            }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d("CANCEL", "LOAD FAILED");
             }
 
 
@@ -189,11 +211,37 @@ public class SearchFragment extends Fragment {
                     Collections.sort(allHikes, COMPARE_STRING);
                 }
 
-                HikeListAdapter adapter = new HikeListAdapter(getActivity(), allHikes.toArray(new HikeListItem[0]));
+                HikeListAdapter adapter = new HikeListAdapter(getActivity(), R.layout.list_row, allHikes);
                 hikeList.setAdapter(adapter);
-
             }
 
+        });
+
+        hikeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ListView listView = (ListView) view.getParent();
+                if (listView != null) {
+
+                    HikeListItem hike = allHikes.get(position);
+                    if (hike != null) {
+                            Intent startNewHikeActivity = new Intent(getActivity(), HikeActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("title", allHikes.get(position).title);
+//                            b.putString("difficulty", allHikes.get(position).difficulty.toString());
+//                            b.putFloat("rating", allHikes.get(position).rating);
+//                            b.putFloat("distance", allHikes.get(position).distance);
+//                            b.putFloat("lat", allHikes.get(position).lat);
+//                            b.putFloat("lg", allHikes.get(position).lg);
+
+                            startNewHikeActivity.putExtras(b);
+                            startActivity(startNewHikeActivity);
+
+                    }
+                }
+            }
         });
     }
 
