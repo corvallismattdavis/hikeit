@@ -147,6 +147,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 callSearch(query);
                 searchView.clearFocus();
+                Log.d("COMPARE", "searched");
                 return true;
             }
 
@@ -159,6 +160,8 @@ public class SearchFragment extends Fragment {
             }
 
             public void callSearch(String query) {
+                Log.d("COMPARE", "searched inside");
+                final String q = query.toLowerCase().split("\\s")[0];
                 if (query.contains("near") || query.contains("me"))
                 {
                     Collections.sort(allHikes, HikeListItem.COMPARE_BY_CLOSE_TO_ME);
@@ -167,29 +170,26 @@ public class SearchFragment extends Fragment {
                 }
                 else
                 {
-                    final Set<String> matches = new HashSet<String>();
-                    for(String tokens : query.split("\\s")) {
-                        matches.add(tokens.toLowerCase()); //convert the search string into tokens
-                    }
                     Comparator<HikeListItem> COMPARE_STRING = new Comparator<HikeListItem>() {
                         public int compare(HikeListItem o1, HikeListItem o2) {
-                            int scoreDiff = getScore(o1.title) - getScore(o2.title);
-                            if((getScore(o1.title) == 0 && getScore(o2.title) == 0) || scoreDiff == 0) {
-                                return o1.compareTo(o2);
-                            }
-                            return - (getScore(o1.title) - getScore(o2.title));
+                            return (getScore(o1.title).compareTo(getScore(o2.title)));
                         }
 
-                        private int getScore(String s) {
-                            int score = 0;
-                            for(String match : matches) {
-                                if(s.toLowerCase().contains(match)) {
-                                    score++;
+                        private Integer getScore(String s) {
+                            int bestMatch = 1000000;
+                            String[] tokens = s.toLowerCase().split("\\s");
+                            for (int i = 0; i < tokens.length; i++)
+                            {
+                                int comp = tokens[i].compareTo(q);
+                                if (Math.abs(comp) < bestMatch)
+                                {
+                                    bestMatch = Math.abs(comp);
                                 }
                             }
-                            return score;
+                            return bestMatch;
                         }
                     };
+                    Log.d("COMPARE", "Sorting...");
                     Collections.sort(allHikes, COMPARE_STRING);
                     HikeListAdapter adapter = new HikeListAdapter(getActivity(), R.layout.list_row, allHikes);
                     hikeList.setAdapter(adapter);
