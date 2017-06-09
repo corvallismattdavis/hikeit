@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:foreground="?attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants">
@@ -11,32 +11,50 @@
 android:layout_width="match_parent"
 android:layout_height="127dp">
 
+    <TextView
+        android:id="@+id/list_row_username"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_row_rating"
+        android:padding="@dimen/small_margin"
+        android:ellipsize="end"
+        android:maxLines="4"
+        style="?android:textAppearanceSmall"
+        tools:text="User Who Left Review"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/list_row_date"
+        android:layout_width="match_parent"
+        android:paddingRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_row_rating"
+        android:padding="@dimen/small_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_alignRight="@id/list_row_date"
+        style="?android:textAppearanceSmall"
+        tools:text="Date Field"
+        android:gravity="right"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="false"/>
+
+
 <TextView
     android:id="@+id/list_row_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/list_row_rating"
+    android:layout_below="@+id/list_row_username"
     android:paddingTop="@dimen/small_margin"
     android:paddingLeft="@dimen/small_margin"
     android:paddingRight="@dimen/small_margin"
-    android:maxLines="1"
+    android:maxLines="5"
     android:ellipsize="end"
     style="?android:textAppearanceMedium"
     tools:text="Review the user has left will appear here......."
-    android:focusableInTouchMode="false"
-    android:clickable="false"
-    android:focusable="false"/>
-
-<TextView
-    android:id="@+id/list_row_length"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/list_row_title"
-    android:padding="@dimen/small_margin"
-    android:ellipsize="end"
-    android:maxLines="4"
-    style="?android:textAppearanceSmall"
-    tools:text="User Who Left Review"
     android:focusableInTouchMode="false"
     android:clickable="false"
     android:focusable="false"/>
@@ -59,4 +77,5 @@ android:layout_height="127dp">
     android:layout_alignParentStart="true" />
 
 </RelativeLayout>
+
 </FrameLayout>
