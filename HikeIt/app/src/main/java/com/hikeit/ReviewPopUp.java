@@ -43,7 +43,7 @@ public class ReviewPopUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_pop_up);
 
-        dbIndices.put("bishop", 0);
+        dbIndices.put("bishops", 0);
         dbIndices.put("valencia", 1);
         dbIndices.put("madonna", 2);
         dbIndices.put("cerrocabrillo", 3);
@@ -56,7 +56,7 @@ public class ReviewPopUp extends AppCompatActivity {
         dbIndices.put("irishhills", 10);
 
         hikeTitle = getIntent().getExtras().getString("title");
-        hike = getIntent().getExtras().getString("hikes");
+        hike = getIntent().getExtras().getString("hike");
 
         childHikeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,11 +123,11 @@ public class ReviewPopUp extends AppCompatActivity {
         revList.add(rev);
         myRef.setValue(reviews);
 
-        Intent backToHike = new Intent(this, HikeActivity.class);
-        Bundle b = new Bundle();
-        b.putString("title", hike);
-        backToHike.putExtras(b);
-        startActivity(backToHike);
+//        Intent backToHike = new Intent(this, HikeActivity.class);
+//        Bundle b = new Bundle();
+//        b.putString("title", hike);
+//        backToHike.putExtras(b);
+//        startActivity(backToHike);
         finish();
     }
 

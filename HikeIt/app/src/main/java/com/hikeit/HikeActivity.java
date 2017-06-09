@@ -63,7 +63,7 @@ public class HikeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
 
-        dbIndices.put("bishop", 0);
+        dbIndices.put("bishops", 0);
         dbIndices.put("valencia", 1);
         dbIndices.put("madonna", 2);
         dbIndices.put("cerrocabrillo", 3);
@@ -86,10 +86,20 @@ public class HikeActivity extends AppCompatActivity {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     HashMap<String, Object> jsonValue = (HashMap<String, Object>)messageSnapshot.getValue();
                     String title = (String) jsonValue.get("title");
-                    if (!hike_title.equals(title))
-                    {
-                        continue;
+
+
+
+                    try {
+                        if (!hike_title.equals(title)) {
+                            continue;
+                        }
                     }
+                    catch (NullPointerException e)
+                    {
+                        //Log.d("titlecheck", hike_title + hike_title.equals(title) + " " + title);
+                    }
+
+
                     String difficulty = (String) jsonValue.get("difficulty");
                     ArrayList<String> imgSrc = (ArrayList<String>) jsonValue.get("imgSrc");
                     float distance = (float)((double)jsonValue.get("distance"));
@@ -257,6 +267,7 @@ public class HikeActivity extends AppCompatActivity {
             b.putString("hike", thisHike.title);
             review.putExtras(b);
             startActivity(review);
+            //finish();
         }
 
         displayReviews();
